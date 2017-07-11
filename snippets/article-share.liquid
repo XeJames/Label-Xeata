@@ -1,0 +1,32 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/article-share.liquid -->
+{% capture article_url %}{{ shop.url }}{{ article.url }}{% endcapture %} 
+{% capture tweet %}{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}: {{ article_url }}{% endcapture %}  
+<ul class="share-links no-bullets inline-list">
+  <li>
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ article_url }}" target="_blank" class="facebook">
+      <span class="socicon socicon-facebook"></span>
+    </a>
+  </li>
+  <li>
+    <a href="https://twitter.com/home?status={{ tweet }}" target="_blank" class="twitter">
+      <span class="socicon socicon-twitter"></span>
+    </a>
+  </li>
+  {% if article.image %}
+  <li>
+    <a href="https://pinterest.com/pin/create/button/?url={{ article_url }}&media={{ article.image.src | img_url: 'large' }}&description={% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}" class="pinterest" target="_blank" >
+      <span class="socicon socicon-pinterest"></span>
+    </a>
+  </li>
+  {% endif %}
+  <li>
+    <a href="https://plus.google.com/share?url={{ article_url }}" class="google" target="_blank" >
+      <span class="socicon socicon-google"></span>
+    </a>
+  </li>
+  <li>
+    <a href="mailto:?&subject=Product Title&body={{ article_url }}" class="email" target="_blank" >
+      <span class="socicon socicon-email"></span>
+    </a>
+  </li>
+</ul>

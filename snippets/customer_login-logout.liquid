@@ -1,0 +1,25 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/customer_login-logout.liquid -->
+<ul class="no-bullets inline-list secondary custom__login-logout">
+{% if customer %}
+   <li class="mobile-nav__item">
+    {% if customer.first_name != blank %}
+      {% capture first_name %}<a href="/account">{{ customer.first_name }}</a>{% endcapture %}
+      {% comment %}ly_i18n_replace_for_[ 'layout.customer.logged_in_as_html' | t: first_name: first_name ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}{% endcapture %}{% include 'ly-static-string' with '3885751' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = first_name  %}{% assign ly_template = ly_template | replace: '[[first_name]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+    {% else %}
+      <a href="/account">{% comment %}ly_i18n_replace_for_[ 'layout.customer.account' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.customer.account' | t }}{% endcapture %}{% include 'ly-static-string' with '3885752' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+    {% endif %}
+  </li>
+  <li>
+    <span aria-hidden="true">/</span>
+  </li>
+  <li class="mobile-nav__item">
+    {% comment %}ly_i18n_replace_for_[ 'layout.customer.log_out' | t | customer_logout_link ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.customer.log_out' | t | customer_logout_link }}{% endcapture %}{% include 'ly-static-string' with '3885753' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape | customer_logout_link }}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+  </li>
+{% else %}
+  {% if shop.customer_accounts_optional %}
+  <li class="mobile-nav__item">
+    {% comment %}ly_i18n_replace_for_[ 'layout.customer.create_account' | t | customer_register_link ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.customer.create_account' | t | customer_register_link }}{% endcapture %}{% include 'ly-static-string' with '3885754' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape | customer_register_link }}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+  </li>
+  {% endif %}
+{% endif %}
+</ul>

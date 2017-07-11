@@ -1,0 +1,24 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/tags-article.liquid -->
+{% comment %}
+
+  This snippet renders a list item with all tags listed out.
+  It is used in article.liquid and blog.liquid.
+
+  More information:
+   - index#article-tags
+   - http://docs.shopify.com/themes/liquid-variables/article
+
+{% endcomment %}
+
+{% if article.tags.size > 0 %}
+<ul class="tag-list no-bullets {{ inline_class }}">  
+  <li>
+    <span class="tag-title">{% comment %}ly_i18n_replace_for_[ 'blogs.article.tags' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.article.tags' | t }}{% endcapture %}{% include 'ly-static-string' with '3885859' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}:</span>
+  </li>
+  {% for tag in article.tags %}
+  <li>
+      <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag }}</a>{% if inline_class == 'inline-list' %}{% unless forloop.last %}, {% endunless %}{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}

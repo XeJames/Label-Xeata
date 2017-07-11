@@ -1,0 +1,14 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/section_feature-products.liquid -->
+
+{% if settings.collection_1 and settings.collection_1 != '' %}
+{% assign collection_1 = settings.collection_1 %}
+{% assign title = settings.collection_1_title %}
+{% endif %}
+
+{% include 'feature-products', selected_collection: collection_1, title: title %}
+
+{% if settings.collection_2 and settings.collection_2 != '' %}
+{% assign collection_2 = settings.collection_2 %}
+{% assign title = settings.collection_2_title %}
+{% include 'feature-products', selected_collection: collection_2 %}
+{% endif %}

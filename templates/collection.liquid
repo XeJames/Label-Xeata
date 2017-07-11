@@ -1,0 +1,102 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /templates/collection.liquid -->
+{% comment %}
+
+  For more information on collection tags:
+    - http://docs.shopify.com/themes/liquid-variables/collection
+
+{% endcomment %}
+
+{% paginate collection.products by 8 %}
+
+{% include 'breadcrumb' %}
+
+{% comment %}
+  Use .grid--rev so that the collection tags appear below the products on mobile
+{% endcomment %}
+
+<section class="collection-page">
+  <div class="grid--rev">
+    <div class="grid__item one-whole ">
+      
+      <header class="grid--table collection-header">
+          <div class="grid__item large--one-half medium--one-third small--one-whole">
+            <h1 class="standard-index {% if collection.description != blank %}has-description{% endif %}">{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+            {% if collection.description != blank %}
+            <div class="rte rte--header collection-description feature-copy">
+              {% comment %}ly_code_replace_for_[ collection.description ]_begin{% endcomment %}{% include 'ly-description' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="grid__item text-right large--one-half medium--two-thirds small--one-whole small--text-left">
+            {% include 'collection-sorting' %}
+          </div>
+      </header>
+  
+      {% comment %}
+        Use class grid-uniform to have evenly sized columns clear
+        each other properly at each breakpoint.
+      {% endcomment %}
+      <div class="grid-uniform product-grid">
+  
+        {% comment %}
+          Loop through our products in the current collection.
+          See the snippet 'product-grid-item' for the layout.
+        {% endcomment %}
+        {% for product in collection.products %}
+          {% include 'product-grid-item' %}
+  
+        {% else %}
+  
+          {% if collection.handle == 'all' and current_tags == '' %}
+            {% comment %}
+              Add default products to help with onboarding for collections/all only
+            {% endcomment %}
+            {% unless emptyState %}
+              {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+              {% assign emptyState = true %}
+            {% endunless %}
+            {% include 'onboarding-empty-collection' %}
+          {% else %}
+            {% comment %}
+              If collection exists but is empty, display message
+            {% endcomment %}
+            <div class="grid__item">
+              <p>{% comment %}ly_i18n_replace_for_[ 'collections.general.no_matches' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.general.no_matches' | t }}{% endcapture %}{% include 'ly-static-string' with '3885904' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+            </div>
+          {% endif %}
+  
+        {% endfor %}
+  
+      </div>
+  
+      {% if paginate.pages > 1 %}
+        <div class="pagination secondary grid--table">
+          <div class="grid__item one-quarter text-left">
+            {% if paginate.previous.is_link %}
+              <a href="{{ paginate.previous.url }}" class="previous-paginate">
+                 <span class="prev-arrow"></span>
+                {% comment %}ly_code_replace_for_[ paginate.previous.title | replace: '&laquo;', '' ]_begin{% endcomment %}{% include 'ly-title' with paginate.previous %}{{ ly_translation | replace: '&laquo;', '' }}{% comment %}ly_code_replace_end{% endcomment %}
+              </a>
+          {% endif %}
+          </div>
+          
+          <div class="grid__item one-half">
+            {% comment %}ly_i18n_replace_for_[ 'collections.pagination.item_count_label' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.pagination.item_count_label' | t }}{% endcapture %}{% include 'ly-static-string' with '3885905' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} {{ paginate.current_offset | plus: 1 }}-{% if paginate.next %}{{ paginate.current_offset | plus: paginate.page_size }}{% else %}{{ paginate.items }}{% endif %} <ly-as-3885903>of</ly-as-3885903> {{ paginate.items }}.
+          </div>
+          
+          <div class="grid__item one-quarter text-right">
+            {% if paginate.next.is_link %}  
+                <a href="{{ paginate.next.url }}">{% comment %}ly_code_replace_for_[ paginate.next.title | replace: '&raquo;', '' ]_begin{% endcomment %}{% include 'ly-title' with paginate.next %}{{ ly_translation | replace: '&raquo;', '' }}{% comment %}ly_code_replace_end{% endcomment %}
+                   <span class="next-arrow"></span>
+                </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+  
+    </div>
+  </div>
+
+{% endpaginate %}
+
+</section>

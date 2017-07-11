@@ -1,0 +1,16 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/type.liquid -->
+{% if settings.font_combination == 'mont_karla' %}
+<link href='//fonts.googleapis.com/css?family=Montserrat:400,700|Karla:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+{% endif %}
+{% if settings.font_combination == 'righteous_libre_open' %}
+<link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic|Righteous|Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+{% endif %}
+{% if settings.font_combination == 'source_open' %}
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic|Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+{% elsif settings.font_combination == 'unica_courier' %}
+<link href='//fonts.googleapis.com/css?family=Unica+One' rel='stylesheet' type='text/css'>
+{% elsif settings.font_combination == 'oswald_ptmono' %}
+<link href='//fonts.googleapis.com/css?family=Oswald:400,700|PT+Mono' rel='stylesheet' type='text/css'>
+{% elsif settings.font_combination == 'lato_merriweather' %}
+<link href='//fonts.googleapis.com/css?family=Lato:400,700|Merriweather:400,700,400italic,300' rel='stylesheet' type='text/css'>
+{% endif %}

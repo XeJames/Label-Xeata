@@ -1,0 +1,129 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<!-- /templates/index.liquid -->
+{% comment %}
+
+  This is the homepage of your site.
+
+  More info on global variables (available on all templates):
+    - http://docs.shopify.com/themes/liquid-variables/global
+
+{% endcomment %}
+
+{% comment %}
+<!-- Let's not delete this yet...-->
+
+<section class="single-product section-product ds_index_page">
+  <div class="wrapper">
+    <div class="section-content">
+      <div class="grid--table product-single">
+        <div class="grid__item large--one-half medium--one-whole text-right image- single-product-image">
+          <div class="product-single__photos" id="ProductPhoto">
+            <img src="//cdn.shopify.com/s/files/1/1156/5806/files/xeata-banner-v1_1024.jpg?12847918012343479100" alt="" />
+            <h2 class="section_title">Charging Kiosks &gt; Location-specific customers &gt; Increased dwell-time &gt; Increased sales</h2>
+          </div>
+        </div>
+        <div class="grid__item large--one-half medium--one-whole single-product-content text-left">
+          <div class="feature-copy">
+          <span id="ProductPrice" class="standard-index" itemprop="price"><ly-as-3886022>Benefits of value-added services (like charging kiosks):</ly-as-3886022></span>
+            
+            <ul class="ds_graph_list">
+              <li>
+                <div class="ds_list_index">01</div>
+                <div class="ds_list_item"><ly-as-3886023>Increased dwell-time at kiosk site = increased opportunities for revenue</ly-as-3886023></div>
+              </li>
+              <li>
+                <div class="ds_list_index">02</div>
+                <div class="ds_list_item"><ly-as-3886024>Chargers act as a platform for location-specific promotion and advertising</ly-as-3886024></div>
+              </li>
+              <li>
+                <div class="ds_list_index">03</div>
+                <div class="ds_list_item"><ly-as-3886025>Helps a business stand out from its competition</ly-as-3886025></div>
+              </li>
+              <li>
+                <div class="ds_list_index">04</div>
+                <div class="ds_list_item"><ly-as-3886026>Increased word-of-mouth and social media interaction</ly-as-3886026></div>
+              </li>
+              <li>
+                <div class="ds_list_index">05</div>
+                <div class="ds_list_item"><ly-as-3886027>Positive associations with your brand</ly-as-3886027></div>
+              </li>
+              <li>
+                <div class="ds_list_index">06</div>
+                <div class="ds_list_item"><ly-as-3886028>Increased customer satisfaction</ly-as-3886028></div>
+              </li>
+              <li><a href="/pages/why-charging-kiosks" class="drawer-nav__link"><ly-as-3886029>More</ly-as-3886029></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endcomment %}
+
+<!-- Home page - featured product -->
+{% if settings.homepage_section_1 != blank %}
+	{% include settings.homepage_section_1 %}	
+{% endif %}
+
+<!-- Home page - featured products -->
+{% if settings.homepage_section_2 != blank %}
+  {% include settings.homepage_section_2 %}
+{% endif %}
+
+
+<!-- Home page - featured content -->
+{% if settings.homepage_section_3 != blank %}
+  {% include settings.homepage_section_3 %}
+{% endif %}
+
+
+<!-- Home page - tour and events -->
+{% if settings.homepage_section_4 != blank %}
+  {% include settings.homepage_section_4 %}
+{% endif %}
+
+
+<!-- Home page - Instagram -->
+{% if settings.homepage_section_5 != blank %}
+  {% include settings.homepage_section_5 %}
+{% endif %}
+
+<!-- Home page - featured blog -->
+{% if settings.homepage_section_6 != blank %}
+  {% include settings.homepage_section_6 %}
+{% endif %}
+
+<!-- Home page - section 7 -->
+{% if settings.homepage_section_7 != blank %}
+  {% include settings.homepage_section_7 %}
+{% endif %}
+
+<!-- Home page - section 8 -->
+{% if settings.homepage_section_8 != blank %}
+  {% include settings.homepage_section_8 %}
+{% endif %}
+
+<!-- Home page - section 9 -->
+{% if settings.homepage_section_9 != blank %}
+  {% include settings.homepage_section_9 %}
+{% endif %}
+
+<!-- Home page - section 10 -->
+{% if settings.homepage_section_10 != blank %}
+  {% include settings.homepage_section_10 %}
+{% endif %}
+
+<!-- Home page - section 11 -->
+{% if settings.homepage_section_11 != blank %}
+  {% include settings.homepage_section_11 %}
+{% endif %}
+
+<!-- Home page - section 12 -->
+{% if settings.homepage_section_12 != blank %}
+  {% include settings.homepage_section_12 %}
+{% endif %}
+
+
+

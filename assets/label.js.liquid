@@ -1,0 +1,680 @@
+// Label functions
+window.Label = window.Label || {};
+
+Label.cacheSelectors = function () {
+  Label.cache = {
+    // General
+    $html                    : $('html'),
+    $body                    : $('body'),
+
+    // Navigation
+    $navigation              : $('#AccessibleNav'),
+    $subNav                  : $('.sub-nav'),
+    $mobileSubNavToggle      : $('.mobile-nav__toggle'),
+
+    // Collection Pages
+    $changeView              : $('.change-view'),
+
+    // Product Page
+    $productImage            : $('#ProductPhotoImg'),
+    $thumbImages             : $('#ProductThumbs').find('a.product-single__thumbnail'),
+
+    // Customer Pages
+    $recoverPasswordLink     : $('#RecoverPassword'),
+    $hideRecoverPasswordLink : $('#HideRecoverPasswordLink'),
+    $recoverPasswordForm     : $('#RecoverPasswordForm'),
+    $customerLoginForm       : $('#CustomerLoginForm'),
+    $passwordResetSuccess    : $('#ResetSuccess')
+  };
+};
+
+Label.init = function () {
+  FastClick.attach(document.body);
+  Label.cacheSelectors();
+  Label.subNav();
+  Label.drawersInit();
+  Label.mobileNavToggle();
+  Label.productImageSwitch();
+  Label.responsiveVideos();
+  Label.collectionViews();
+  Label.loginForms();
+  Label.globals();
+  Label.header();
+  Label.heroLetterSpacing();
+  Label.checkNavSize();
+  Label.resize();
+  if( $('body').hasClass('template-index') ) {
+  Label.homepage();
+  }
+};
+
+
+Label.globals = function() {
+  //nav width
+  Label.globals.navWidth = 0;
+  $('header .site-nav li').each(function() {
+    Label.globals.navWidth = Label.globals.navWidth + $(this).outerWidth();
+  });
+  Label.isIE8 = false;
+  if($('html').hasClass('lt-ie9')) {
+    Label.isIE8 = true;
+  }
+};
+
+Label.header = function() {
+  $('.header_hero-image .arrow').click(function() {
+    $('html, body').animate({
+      scrollTop: $(".main-content").offset().top
+  }, 500);
+  });
+  if(Label.isIE8) {
+    var imgSrc = $('img.ie8-hero-image').data('src');
+    $('img.ie8-hero-image').attr('src', imgSrc);
+  }
+};
+
+Label.heroLetterSpacing = function() {
+  if( $('.header_hero-image').length ) {
+    $heroTitle = $('header.hero-active .logo-hero-image .site-header__logo a');
+    $heroTitleText = $heroTitle.text();
+    $letterSpacing = $('header.hero-active .logo-hero-image .site-header__logo a').css('letter-spacing');
+    if($letterSpacing != 0) {
+      $letterSpacing = parseInt( $letterSpacing.replace("px",""));
+    }
+    if($letterSpacing > 6) {
+      var $words = $heroTitleText.split(" ");
+      var $newString = "";
+      for (var i = 0; i < $words.length; i++) {
+          var $lastChar = $words[i][$words[i].length -1];
+          $newString = $newString + $words[i].slice(0,-1) +  "<span>" + $lastChar + "</span> "; 
+      }
+      $heroTitle.html($newString);
+      $heroTitle.parents('.text-active').addClass("show");
+    } else {
+      $heroTitle.parents('.text-active').addClass("show");
+    }
+  }
+};
+
+Label.homepage = function() {
+  {% if settings.instagram_access_token != '' %}
+    if($('.homepage-instagram').length > 0){
+      Label.instagram();
+    }
+  {% endif %}
+  {% if settings.tour_source != '' %}
+   
+    if($('.homepage-tour').length > 0){
+      switch($('.homepage-tour').data('source')) {
+        case 'tour_songkick':
+          Label.songkick();
+          break;
+        case 'tour_bandsintown':
+          Label.bandsintown();
+          break;
+        case 'tour_eventbrite':
+          Label.eventbrite();
+          break;
+      } 
+    }
+  {% endif %}
+};
+
+Label.checkNavSize  = function() {
+  var totalWidth;
+  if( $('header').hasClass('logo-aligned-left')){
+    totalWidth = $('header .logo-and-nav').outerWidth();
+    var logoWidth = $('header .logo-and-nav .site-header__logo a').outerWidth();
+    var navWidth = $('header .site-nav').outerWidth();
+    var breakpoint = (totalWidth - logoWidth) - 100;
+    if(navWidth > breakpoint) {
+      $('header .logo-and-nav, header .header-meta').addClass("break");
+    }
+    if(navWidth < breakpoint)  {
+      $('header .logo-and-nav, header .header-meta').removeClass("break");
+    }
+  }
+  if( $('header').hasClass('nav-aligned-left') ){
+    totalWidth = $('header .nav-left-only').outerWidth();
+    if(Label.globals.navWidth > (totalWidth - 80) ) {
+      $('header .site-nav').addClass("hidden");
+      $('header .site-header__burger-menu').addClass("show");
+    } else {
+      $('header .site-nav').removeClass("hidden");
+      $('header .site-header__burger-menu').removeClass("show");
+    }
+  }
+};
+
+Label.resize = function() {
+  $(window).bind('resize', function () { 
+      Label.checkNavSize();
+  });
+};
+
+Label.instagram = function() {
+  var count = 8;
+  var url = "//api.instagram.com/v1/users/self/media/recent?access_token=" + "{{ settings.instagram_access_token }}&count=" + count;  
+  $.ajax({
+    url: url,
+    type: "get",
+    dataType: "jsonp",
+    success: function(data) {
+      for(var i=0; i<count; i++) {
+        var imgURL = data.data[i].images.standard_resolution.url;
+        var imgW = data.data[i].images.standard_resolution.width;
+        var imgH = data.data[i].images.standard_resolution.height;
+        var permalink = data.data[i].link;
+        var gramItem = $('.gram-item-blank');
+        var caption = '';
+        if(data.data[i].caption){
+          caption = data.data[i].caption.text;
+        }
+        var additionalClasses = "";
+        if(i > 5) {
+          additionalClasses = "xlarge--hide";
+        }
+        gramItem = gramItem.clone();
+        gramItem.appendTo('.homepage-instagram .grid--full');
+        gramItem.removeClass('gram-item-blank').addClass('gram-item ' + additionalClasses);
+        gramItem.find('a').attr('href', permalink);
+        gramItem.find('a').append('<img src="'+imgURL+'" height="'+imgH+'" weight="'+imgW+'" alt="'+caption+'" />');  
+      }
+    }
+  });
+};
+
+Label.songkick = function() {
+  {% if settings.songkick_artist_id != '' %}
+    var artistID = "{{ settings.songkick_artist_id }}";
+    var maxEvents = "{{ settings.number_of_events }}";
+		$.getJSON("//api.songkick.com/api/3.0/artists/" + artistID + "/calendar.json?apikey=aeff44DVdi0z3VT6&jsoncallback=?",           
+		function(data){
+			if(data.resultsPage.totalEntries === 0) {
+        $('.homepage-tour').find('.tour-item-no-events').addClass('show');
+        $('.homepage-tour').find('.button-wrapper a.btn').remove();
+        return false;
+			}
+			var events = data.resultsPage.results.event;
+			$(events).each(function (i) {
+  			if(i == maxEvents){ return false; }
+  			
+		    var dateDay = Date.parse( events[i].start.date).toString("dd");
+		    var shortMonth = Date.parse( events[i].start.date).toString("MMM");
+		    var venue = events[i].venue.displayName;
+		    var location = events[i].location.city;
+		    var link = events[i].uri;
+		    var tourItem = $('.tour-item-blank');
+		    if(events[i].type == "Festival") {
+			    venue = events[i].displayName;
+		    }
+		    tourItem = tourItem.clone();
+		    tourItem.removeClass('tour-item-blank').addClass('tour-item');
+		    tourItem.appendTo('.homepage-tour  .wrapper.tour-item-wrapper .section-content');
+		    tourItem.find('.date-day').html(dateDay);
+		    tourItem.find('.date-month').html(shortMonth);
+		    tourItem.find('.event-location').html(location);
+		    tourItem.find('.event-venue').html(venue);
+		    tourItem.find('a.ticket-link').attr('href', link);
+			});
+			$('.homepage-tour').find('.button-wrapper').addClass('show');
+      $('.homepage-tour').find('.button-wrapper a.btn').attr('href','http://www.songkick.com/artists/' + artistID);
+		});
+  {% endif %}
+};
+
+Label.bandsintown = function() {
+  {% if settings.bandsintown_name != '' %}
+    var bandsintownName =  "{{ settings.bandsintown_name }}";
+    var maxEvents = "{{ settings.number_of_events }}";
+    bandsintownName = bandsintownName.toLowerCase();
+    bandsintownName = bandsintownName.replace(' ','%20');
+    var bandsintownSlug = bandsintownName.replace('%20','');
+    var url = "//api.bandsintown.com/artists/" + bandsintownName + "/events.json?api_version=2.0&app_id=giraffic_themes";  
+    $.ajax({
+      url: url,
+      type: "get",
+      dataType: "jsonp",
+      success: function(data) {
+        var isEmpty = jQuery.isEmptyObject(data); 
+        if(isEmpty) {
+          $('.homepage-tour').find('.tour-item-no-events').addClass('show');
+          $('.homepage-tour').find('.button-wrapper a.btn').remove();
+          return false;
+        }
+        $(data).each(function (i) {
+          if(i == maxEvents){ return false; }
+          var dateDay = Date.parse( data[i].datetime).toString("dd");
+			    var shortMonth = Date.parse( data[i].datetime).toString("MMM");
+			    var venue = data[i].venue.name;
+			    var location = data[i].formatted_location;
+			    var link = data[i].ticket_url;
+			    var tourItem = $('.tour-item-blank');
+			    tourItem = tourItem.clone();
+			    tourItem.removeClass('tour-item-blank').addClass('tour-item');
+			    tourItem.appendTo('.homepage-tour  .wrapper.tour-item-wrapper .section-content');
+			    tourItem.find('.date-day').html(dateDay);
+			    tourItem.find('.date-month').html(shortMonth);
+			    tourItem.find('.event-location').html(location);
+			    tourItem.find('.event-venue').html(venue);
+			    tourItem.find('a.ticket-link').attr('href', link);
+		    });
+		    $('.homepage-tour').find('.button-wrapper').addClass('show');
+		    $('.homepage-tour').find('.button-wrapper a.btn').attr('href','http://www.bandsintown.com/' + bandsintownSlug);
+      }
+    });
+  {% endif %}
+};
+
+Label.eventbrite = function() {
+  {% if settings.eventbrite_access_token != '' %}
+    var eventbriteAccessToken =  "{{ settings.eventbrite_access_token }}"; 
+    var maxEvents = "{{ settings.number_of_events }}";
+    var url = "https://www.eventbriteapi.com/v3/users/me/owned_events/?token=" + eventbriteAccessToken + "&expand=venue&status=live";
+    $.ajax({
+      url: url,
+      type: "get",
+      dataType: "json",
+      success: function(data) {
+        var events = data.events;
+        $(events).each(function (i) {
+          if(i == maxEvents){ return false; }
+          var dateDay = Date.parse( events[i].start.local).toString("dd");
+			    var shortMonth = Date.parse( events[i].start.local).toString("MMM");
+			    var name = events[i].name.text;
+			    var venue = "";
+			    if (events[i].venue) {
+			      var venue = events[i].venue.name + " &#183; " + events[i].venue.address.city + ", " + events[i].venue.address.country;
+			    }
+			    var link = events[i].url;
+			    var tourItem = $('.tour-item-blank');
+			    tourItem = tourItem.clone();
+			    tourItem.removeClass('tour-item-blank').addClass('tour-item');
+			    tourItem.appendTo('.homepage-tour .wrapper.tour-item-wrapper .section-content');
+			    tourItem.find('.date-day').html(dateDay);
+			    tourItem.find('.date-month').html(shortMonth);
+			    tourItem.find('.event-location').html(name);
+			    tourItem.find('.event-venue').html(venue);
+			    tourItem.find('a.ticket-link').attr('href', link);
+        }); 
+      }
+    });
+    
+  {% endif %}
+};
+
+Label.subNav = function () { 
+  var $nav = Label.cache.$navigation,
+      $subNav = Label.cache.$subNav,
+      $allLinks = $nav.find('a'),
+      $topLevel = $nav.children('li').find('a'),
+      $parents = $('header'),
+      $subMenuLinks = $nav.find('.site-nav__dropdown').find('a')
+      activeClass = 'nav-hover';
+      focusClass = 'nav-focus';
+
+  // Mouseenter
+  $parents.on('click', ".site-nav--has-dropdown", function(evt) { 
+    var $el = $(this);
+    evt.preventDefault();
+    if( $(this).hasClass(activeClass) ) {
+      $(this).removeClass(activeClass);
+      hideDropdown($el);
+    } else {
+      showDropdown($el);
+    }
+    
+  });
+  
+  function showDropdown ($el) {
+    $parents.find('.site-nav--has-dropdown').removeClass(activeClass);
+    $el.addClass(activeClass);
+    var $list = ".child-list-" + $el.data('list');
+    $subNav.addClass('show');
+    $subNav.find('ul, .sub-nav-search').removeClass('show');
+    $subNav.find($list).addClass('show');
+    setTimeout(function() {
+      Label.cache.$body.on('touchstart', function() {
+        hideDropdown($el);
+      });
+    }, 250);
+  }
+  
+  function hideDropdown ($el) {
+    $subNav.removeClass('show');
+  }
+  
+  $(document).mouseup(function (e)
+  {   
+    var container = $('.sub-nav, .site-nav');
+    if (!container.is(e.target) 
+      && container.has(e.target).length === 0)
+    {
+      $parents.find('.site-nav--has-dropdown').removeClass("nav-hover");
+      hideDropdown($('.site-nav--has-dropdown'));
+    }
+  });
+  
+};
+
+Label.drawersInit = function () {
+  Label.LeftDrawer = new Label.Drawers('NavDrawer', 'left');
+  Label.RightDrawer = new Label.Drawers('CartDrawer', 'right', {
+    {% if settings.ajax_cart_enable %}'onDrawerOpen': ajaxCart.load{% endif %}
+  });
+};
+
+Label.mobileNavToggle = function () {
+  Label.cache.$mobileSubNavToggle.on('click', function(evt) {
+    evt.preventDefault();
+    $(this).parent().toggleClass('drawer-nav--expanded');
+  });
+};
+
+Label.getHash = function () {
+  return window.location.hash;
+};
+
+Label.updateHash = function (hash) {
+  window.location.hash = '#' + hash;
+  $('#' + hash).attr('tabindex', -1).focus();
+};
+
+Label.productPage = function (options) {
+  var moneyFormat = options.money_format,
+      variant = options.variant,
+      selector = options.selector;
+      product = options.product;
+  // Selectors
+  var $productImage = $('#ProductPhotoImg'),
+      $addToCart = $('#AddToCart'),
+      $productPrice = $('#ProductPrice'),
+      $comparePrice = $('#ComparePrice'),
+      $quantityElements = $('.quantity-selector, label + .js-qty'),
+      $addToCartText = $('#AddToCartText');
+  
+  //init swipebox
+  $( '.swipebox' ).swipebox( {
+		closeOnClick: true,
+		useSVG: false
+	});
+  
+  if (variant) {
+    // Update variant image, if one is set
+    if (variant.featured_image) {
+      var newImg = variant.featured_image,
+          el = $productImage[0];
+      var newImgZoom = Shopify.Image.getSizedImageUrl(newImg.src,'2048x2048');
+      var newImg = Shopify.Image.getSizedImageUrl(newImg.src,'1024x1024');
+      var productImage = $('#ProductPhotoImg');
+      Label.switchImage(newImg, null, productImage, newImgZoom);
+    }
+
+    // Select a valid variant if available
+    if (variant.available) {
+      // Available, enable the submit button, change text, show quantity elements
+      $addToCart.removeClass('disabled').prop('disabled', false);
+      $addToCartText.html({{ 'products.product.add_to_cart' | t | json }});
+      $quantityElements.show();
+    } else {
+      // Sold out, disable the submit button, change text, hide quantity elements
+      $addToCart.addClass('disabled').prop('disabled', true);
+      $addToCartText.html({{ 'products.product.sold_out' | t | json }});
+      $quantityElements.hide();
+    }
+
+    // Regardless of stock, update the product price
+    $productPrice.html( Shopify.formatMoney(variant.price, moneyFormat) );
+
+    // Also update and show the product's compare price if necessary
+    if (variant.compare_at_price > variant.price) {
+      $comparePrice
+        .html({{ 'products.product.compare_at' | t | json }} + ' ' + Shopify.formatMoney(variant.compare_at_price, moneyFormat))
+        .show();
+    } else {
+      $comparePrice.hide();
+    }
+
+  } else {
+    // The variant doesn't exist, disable submit button.
+    // This may be an error or notice that a specific variant is not available.
+    // To only show available variants, implement linked product options:
+    //   - http://docs.shopify.com/manual/configuration/store-customization/advanced-navigation/linked-product-options
+    $addToCart.addClass('disabled').prop('disabled', true);
+    $addToCartText.html({{ 'products.product.unavailable' | t | json }});
+    $quantityElements.hide();
+  }
+};
+
+Label.productImageSwitch = function () {
+  if (Label.cache.$thumbImages.length) {
+    // Switch the main image with one of the thumbnails
+    // Note: this does not change the variant selected, just the image
+    Label.cache.$thumbImages.on('click', function(evt) {
+      evt.preventDefault();
+      
+      var newImage = $(this).attr('href');
+      var newImageHighRes = $(this).data('highres');
+        Label.switchImage(newImage, null, Label.cache.$productImage, newImageHighRes);
+    });
+  }
+};
+
+Label.switchImage = function (src, imgObject, el, highRes) {
+  // Make sure element is a jquery object
+  if ( typeof Label.cache !== 'undefined' ) {
+    Label.cache.$thumbImages.removeClass("active");
+    Label.cache.$thumbImages.each(function() {
+      var thumbSrc = $(this).attr("href");
+      thumbSrc = thumbSrc.split('?')[0];
+      var newSrc =  src.split('?')[0];
+      if( thumbSrc === newSrc ) {
+        $(this).addClass('active');
+      }
+    });
+  }
+  var $el = $(el);
+  $el.attr('src', src);
+  $('a.swipebox').attr('href', highRes);
+};
+
+Label.responsiveVideos = function () {
+  $('iframe[src*="youtube.com/embed"]').wrap('<div class="video-wrapper"></div>');
+  $('iframe[src*="player.vimeo"]').wrap('<div class="video-wrapper"></div>');
+};
+
+Label.collectionViews = function () {
+  if (Label.cache.$changeView.length) {
+    Label.cache.$changeView.on('click', function() {
+      var view = $(this).data('view'),
+          url = document.URL,
+          hasParams = url.indexOf('?') > -1;
+
+      if (hasParams) {
+        window.location = replaceUrlParam(url, 'view', view);
+      } else {
+        window.location = url + '?view=' + view;
+      }
+    });
+  }
+};
+
+Label.loginForms = function() {
+  function showRecoverPasswordForm() {
+    Label.cache.$recoverPasswordForm.show();
+    Label.cache.$customerLoginForm.hide();
+  }
+
+  function hideRecoverPasswordForm() {
+    Label.cache.$recoverPasswordForm.hide();
+    Label.cache.$customerLoginForm.show();
+  }
+
+  Label.cache.$recoverPasswordLink.on('click', function(evt) {
+    evt.preventDefault();
+    showRecoverPasswordForm();
+  });
+
+  Label.cache.$hideRecoverPasswordLink.on('click', function(evt) {
+    evt.preventDefault();
+    hideRecoverPasswordForm();
+  });
+
+  // Allow deep linking to recover password form
+  if (Label.getHash() == '#recover') {
+    showRecoverPasswordForm();
+  }
+};
+
+Label.resetPasswordSuccess = function() {
+  Label.cache.$passwordResetSuccess.show();
+};
+
+Label.AddToCartComplete = function() {
+  $('.cta-complete').addClass('visible');
+  setTimeout(function(){
+    $('.cta-complete').addClass('show');
+  }, 50);
+}
+
+/*============================================================================
+  Drawer modules
+  - Docs http://shopify.github.io/Timber/#drawers
+==============================================================================*/
+Label.Drawers = (function () {
+  var Drawer = function (id, position, options) {
+    var defaults = {
+      close: '.js-drawer-close',
+      open: '.js-drawer-open-' + position,
+      openClass: 'js-drawer-open',
+      dirOpenClass: 'js-drawer-open-' + position
+    };
+
+    this.$nodes = {
+      parent: $('body, html'),
+      page: $('#PageContainer'),
+      moved: $('.is-moved-by-drawer')
+    };
+
+    this.config = $.extend(defaults, options);
+    this.position = position;
+
+    this.$drawer = $('#' + id);
+
+    if (!this.$drawer.length) {
+      return false;
+    }
+
+    this.drawerIsOpen = false;
+    this.init();
+  };
+
+  Drawer.prototype.init = function () {
+    $(this.config.open).on('click', $.proxy(this.open, this));
+    this.$drawer.find(this.config.close).on('click', $.proxy(this.close, this));
+  };
+
+  Drawer.prototype.open = function (evt) {
+    // Keep track if drawer was opened from a click, or called by another function
+    var externalCall = false;
+
+    // Prevent following href if link is clicked
+    if (evt) {
+      evt.preventDefault();
+    } else {
+      externalCall = true;
+    }
+
+    // Without this, the drawer opens, the click event bubbles up to $nodes.page
+    // which closes the drawer.
+    if (evt && evt.stopPropagation) {
+      evt.stopPropagation();
+      // save the source of the click, we'll focus to this on close
+      this.$activeSource = $(evt.currentTarget);
+    }
+
+    if (this.drawerIsOpen && !externalCall) {
+      return this.close();
+    }
+
+    // Add is-transitioning class to moved elements on open so drawer can have
+    // transition for close animation
+    this.$nodes.moved.addClass('is-transitioning');
+    this.$drawer.prepareTransition();
+
+    this.$nodes.parent.addClass(this.config.openClass + ' ' + this.config.dirOpenClass);
+    this.drawerIsOpen = true;
+
+    // Set focus on drawer
+    this.trapFocus(this.$drawer, 'drawer_focus');
+
+    // Run function when draw opens if set
+    if (this.config.onDrawerOpen && typeof(this.config.onDrawerOpen) == 'function') {
+      if (!externalCall) {
+        this.config.onDrawerOpen();
+      }
+    }
+
+    if (this.$activeSource && this.$activeSource.attr('aria-expanded')) {
+      this.$activeSource.attr('aria-expanded', 'true');
+    }
+
+    // Lock scrolling on mobile
+    this.$nodes.page.on('touchmove.drawer', function () {
+      return false;
+    });
+
+    this.$nodes.page.on('click.drawer', $.proxy(function () {
+      this.close();
+      return false;
+    }, this));
+  };
+
+  Drawer.prototype.close = function () {
+    if (!this.drawerIsOpen) { // don't close a closed drawer
+      return;
+    }
+
+    // deselect any focused form elements
+    $(document.activeElement).trigger('blur');
+
+    // Ensure closing transition is applied to moved elements, like the nav
+    this.$nodes.moved.prepareTransition({ disableExisting: true });
+    this.$drawer.prepareTransition({ disableExisting: true });
+
+    this.$nodes.parent.removeClass(this.config.dirOpenClass + ' ' + this.config.openClass);
+
+    this.drawerIsOpen = false;
+
+    // Remove focus on drawer
+    this.removeTrapFocus(this.$drawer, 'drawer_focus');
+
+    this.$nodes.page.off('.drawer');
+  };
+
+  Drawer.prototype.trapFocus = function ($container, eventNamespace) {
+    var eventName = eventNamespace ? 'focusin.' + eventNamespace : 'focusin';
+
+    $container.attr('tabindex', '-1');
+
+    $container.focus();
+
+    $(document).on(eventName, function (evt) {
+      if ($container[0] !== evt.target && !$container.has(evt.target).length) {
+        $container.focus();
+      }
+    });
+  };
+
+  Drawer.prototype.removeTrapFocus = function ($container, eventNamespace) {
+    var eventName = eventNamespace ? 'focusin.' + eventNamespace : 'focusin';
+
+    $container.removeAttr('tabindex');
+    $(document).off(eventName);
+  };
+
+  return Drawer;
+})();
+
+// Initialize Timber's JS on docready
+$(Label.init);

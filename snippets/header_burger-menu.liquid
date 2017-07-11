@@ -1,0 +1,11 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/header_burger-menu.liquid -->
+<div class="site-header__burger-menu">
+  <button type="button" class="js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false"  tabindex="1">
+    <div class="icon-burger">
+      <div class="row"></div>
+      <div class="row"></div>
+      <div class="row"></div>
+    </div>
+    <span class="menu-text medium-down--hide">{% comment %}ly_i18n_replace_for_[ 'layout.navigation.menu' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.navigation.menu' | t }}{% endcapture %}{% include 'ly-static-string' with '3885793' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+  </button>
+</div>

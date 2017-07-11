@@ -1,0 +1,1549 @@
+[
+  {
+    "name": "theme_info",
+    "logo": "https:\/\/cdn.shopify.com\/s\/files\/1\/1072\/1696\/t\/5\/assets\/giraffic-logo.jpg",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Label Theme"
+      },
+      {
+        "type": "paragraph",
+        "content": "Need questions or help? Take a look at the [Theme Documentation](http:\/\/support.girafficthemes.com\/customer\/portal\/articles\/2332264-label-theme-overview) or email [support@girafficthemes.com](mailto:support@girafficthemes.com)."
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#ff0000"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary",
+        "default": "#dcdcdc"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Links and accents",
+        "default": "#dcdcdc"
+      },
+      {
+        "type": "color",
+        "id": "color_body_bg",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_title",
+        "label": "Titles ",
+        "default": "#dcdcdc"
+      },
+      {
+        "type": "color",
+        "id": "color_subheader",
+        "label": "Subheader",
+        "default": "#dcdcdc"
+      },
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "color",
+        "id": "color_header_text",
+        "label": "Text",
+        "default": "#000",
+        "info": "If banner is enabled, header text color will be set in \"Home page - banner \""
+      },
+      {
+        "type": "color",
+        "id": "color_header_border",
+        "label": "Bottom border",
+        "default": "#000"
+      },
+      {
+        "type": "header",
+        "content": "Buttons"
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button style:",
+        "options": [
+          {
+            "value": "full_square",
+            "label": "Square, full color"
+          },
+          {
+            "value": "border_square",
+            "label": "Square, border only"
+          },
+          {
+            "value": "full_rounded",
+            "label": "Rounded, full color"
+          },
+          {
+            "value": "border_rounded",
+            "label": "Rounded, border only"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "color_button",
+        "label": "Background \/ border",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_button_hover",
+        "label": "Background \/ border hover",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text",
+        "label": "Text",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_button_text_hover",
+        "label": "Text hover ",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Featured product"
+      },
+      {
+        "type": "color",
+        "id": "feature_product_background",
+        "label": "Background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Feature images \/ collections"
+      },
+      {
+        "type": "color",
+        "id": "color_feature_image_overlay",
+        "label": "Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "select",
+        "id": "button_style_feature",
+        "label": "Button color:",
+        "info": "Override button color for feature images and feature collections.",
+        "options": [
+          {
+            "value": "default",
+            "label": "Default"
+          },
+          {
+            "value": "white",
+            "label": "White"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Footer"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_bg",
+        "label": "Footer background",
+        "default": "#f2f2f2"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_text",
+        "label": "Footer text",
+        "default": "#636363"
+      },
+      {
+        "type": "color",
+        "id": "color_footer_secondary",
+        "label": "Footer secondary",
+        "default": "#636363"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Fonts"
+      },
+      {
+        "type": "paragraph",
+        "content": "Select from the included font combinations, or choose your own custom fonts below. "
+      },
+      {
+        "type": "select",
+        "id": "font_combination",
+        "label": "Font combination",
+        "options": [
+          {
+            "value": "mont_karla",
+            "label": "Montserrat and Karla"
+          },
+          {
+            "value": "righteous_libre_open",
+            "label": "Righteous, Libre and Open Sans"
+          },
+          {
+            "value": "source_open",
+            "label": "Source Sans and Open Sans"
+          },
+          {
+            "value": "unica_courier",
+            "label": "Unica and Courier"
+          },
+          {
+            "value": "oswald_ptmono",
+            "label": "Oswald and PT Mono"
+          },
+          {
+            "value": "lato_merriweather",
+            "label": "Lato and Merriweather"
+          },
+          {
+            "value": "helvetica",
+            "label": "Helvetica"
+          },
+          {
+            "value": "Roboto Slab",
+            "label": "Roboto Slab"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Headings"
+      },
+      {
+        "type": "checkbox",
+        "id": "headings_capitalize",
+        "label": "Capitalize"
+      },
+      {
+        "type": "checkbox",
+        "id": "headings_bold",
+        "label": "Bold"
+      },
+      {
+        "type": "header",
+        "content": "Header navigation"
+      },
+      {
+        "type": "select",
+        "id": "navigation_font",
+        "label": "Font",
+        "options": [
+          {
+            "value": "title_font",
+            "label": "Title Font"
+          },
+          {
+            "value": "body_font",
+            "label": "Body Font"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "navigation_capitalize",
+        "label": "Capitalize"
+      },
+      {
+        "type": "checkbox",
+        "id": "navigation_bold",
+        "label": "Bold"
+      },
+      {
+        "type": "header",
+        "content": "Titles"
+      },
+      {
+        "type": "checkbox",
+        "id": "standard_title_capitalize",
+        "label": "Capitalize"
+      },
+      {
+        "type": "checkbox",
+        "id": "standard_title_bold",
+        "label": "Bold"
+      },
+      {
+        "type": "header",
+        "content": "Section titles"
+      },
+      {
+        "type": "checkbox",
+        "id": "section_title_capitalize",
+        "label": "Capitalize"
+      },
+      {
+        "type": "checkbox",
+        "id": "section_bold",
+        "label": "Bold"
+      },
+      {
+        "type": "select",
+        "id": "section_title_align",
+        "label": "Align",
+        "options": [
+          {
+            "value": "left",
+            "label": "left"
+          },
+          {
+            "value": "center",
+            "label": "center"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Secondary"
+      },
+      {
+        "type": "checkbox",
+        "id": "secondary_title_capitalize",
+        "label": "Capitalize"
+      },
+      {
+        "type": "checkbox",
+        "id": "secondary_bold",
+        "label": "Bold"
+      }
+    ]
+  },
+  {
+    "name": "Header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "checkbox",
+        "id": "logo_use_image",
+        "label": "Use custom logo"
+      },
+      {
+        "type": "image",
+        "id": "logo.png",
+        "label": "Custom logo",
+        "max-width": 800,
+        "max-height": 300,
+        "info": "800 x 300px recommended."
+      },
+      {
+        "type": "checkbox",
+        "id": "use_alternate_logo",
+        "label": "Use alternate logo for home page"
+      },
+      {
+        "type": "checkbox",
+        "id": "use_alternate_logo_drawer",
+        "label": "Use alternate logo for drawer navigation"
+      },
+      {
+        "type": "image",
+        "id": "logo-alternate.png",
+        "label": "Alternate logo",
+        "max-width": 800,
+        "max-height": 300,
+        "info": "800 x 300px recommended."
+      },
+      {
+        "type": "text",
+        "id": "logo_max_width",
+        "label": "Max logo width",
+        "default": "150",
+        "info": "Set a max width for your logo image. Note: if banner image is enabled, the logo width can be set in the \"Home page - banner\" panel."
+      },
+      {
+        "type": "header",
+        "content": "Favicon"
+      },
+      {
+        "type": "checkbox",
+        "id": "favicon_enable",
+        "label": "Use custom icon"
+      },
+      {
+        "type": "image",
+        "id": "favicon.png",
+        "label": "16 x 16px png",
+        "max-width": 16,
+        "max-height": 16
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "select",
+        "id": "header_layout",
+        "label": "Choose layout:",
+        "info": "Note: when the banner image is activated the logo will be moved into the center of the banner.",
+        "options": [
+          {
+            "value": "layout_mobile",
+            "label": "Mobile navigation style on desktop"
+          },
+          {
+            "value": "layout_left",
+            "label": "Logo to the left"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "header_border_height",
+        "label": "Bottom border height",
+        "info": "Note: if the banner image is activated or a feature image is selected as the first section, the border will not be shown on the home page.",
+        "options": [
+          {
+            "value": "none",
+            "label": "none"
+          },
+          {
+            "value": "1px",
+            "label": "Small"
+          },
+          {
+            "value": "4px",
+            "label": "Large"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "header_show_search_icon",
+        "label": "Show search icon"
+      }
+    ]
+  },
+  {
+    "name": "Home page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Sections"
+      },
+      {
+        "type": "paragraph",
+        "content": "Choose your home page sections and their order. Each section can only be used once on the homepage."
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_1",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          },
+          {
+            "value": "section_panel-XePower",
+            "label": "XePower Panel"
+          },
+          {
+            "value": "section_skeleton",
+            "label": "Skeleton"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_2",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_3",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_4",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_5",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_6",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_7",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_8",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_9",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "homepage_section_10",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "section_single-product",
+            "label": "Featured Product"
+          },
+          {
+            "value": "section_feature-products",
+            "label": "Featured Products"
+          },
+          {
+            "value": "section_feature-text",
+            "label": "Featured Content"
+          },
+          {
+            "value": "section_feature-image-1",
+            "label": "Featured Image 1"
+          },
+          {
+            "value": "section_feature-image-2",
+            "label": "Featured Image 2"
+          },
+          {
+            "value": "section_feature-video",
+            "label": "Video"
+          },
+          {
+            "value": "section_featured_collections",
+            "label": "Featured Collections"
+          },
+          {
+            "value": "section_instagram",
+            "label": "Instagram"
+          },
+          {
+            "value": "section_tour",
+            "label": "Tour \/ Events"
+          },
+          {
+            "value": "section_blog",
+            "label": "Blog"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Home page - banner",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_hero_image",
+        "label": "Use Homepage banner"
+      },
+      {
+        "type": "paragraph",
+        "content": "_____________________"
+      },
+      {
+        "type": "image",
+        "id": "hero_image.jpg",
+        "label": "Banner image",
+        "max-width": 1500,
+        "info": "1500px wide recommended. The uploaded file will be resized to fit within those constraints."
+      },
+      {
+        "type": "text",
+        "id": "custom_hero_height",
+        "label": "Custom height:",
+        "info": "e.g. 500 - use to override full screen default"
+      },
+      {
+        "type": "select",
+        "id": "banner_text_color",
+        "label": "Text color",
+        "options": [
+          {
+            "value": "#ffffff",
+            "label": "White"
+          },
+          {
+            "value": "#000000",
+            "label": "Black"
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": "_____________________"
+      },
+      {
+        "type": "text",
+        "id": "logo_max_width_hero",
+        "label": "Max logo width",
+        "default": "600",
+        "info": "Max width of logo image when displayed over the banner image."
+      }
+    ]
+  },
+  {
+    "name": "Home page - featured product",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Choose a product to be highlighted on the home page."
+      },
+      {
+        "type": "product",
+        "id": "feature_single_product",
+        "label": "Select product:"
+      },
+      {
+        "type": "text",
+        "id": "single_product_section_title",
+        "label": "Section title"
+      },
+      {
+        "type": "text",
+        "id": "single_product_subheader",
+        "label": "Subheader text",
+        "info": "e.g. \"Latest Release\", \"October 2015\""
+      },
+      {
+        "type": "textarea",
+        "id": "single_product_description",
+        "label": "Single product description",
+        "info": "Override the default product description with your own text."
+      },
+      {
+        "type": "checkbox",
+        "id": "single_product_show_quantity",
+        "label": "Show quantity option"
+      },
+      {
+        "type": "select",
+        "id": "single_product_behaviour",
+        "label": "Behavior",
+        "options": [
+          {
+            "value": "add_to_cart",
+            "label": "Add to Cart"
+          },
+          {
+            "value": "product_page",
+            "label": "Link to Product Page"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "single_product_cta_text",
+        "label": "Link to product page button text",
+        "info": "If using the \"Link to product page \" behavior",
+        "default": "Find Out More"
+      }
+    ]
+  },
+  {
+    "name": "Home page - featured products",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Featured products 1"
+      },
+      {
+        "type": "collection",
+        "id": "collection_1",
+        "label": "Choose collection:"
+      },
+      {
+        "type": "header",
+        "content": "Featured products 2"
+      },
+      {
+        "type": "collection",
+        "id": "collection_2",
+        "label": "Choose collection:"
+      }
+    ]
+  },
+  {
+    "name": "Home page - featured content",
+    "settings": [
+      {
+        "type": "page",
+        "id": "homepage_featured_content",
+        "label": "Select page:"
+      }
+    ]
+  },
+  {
+    "name": "Home page - featured image 1",
+    "settings": [
+      {
+        "type": "image",
+        "id": "feature_image_1.jpg",
+        "label": "Image",
+        "max-width": 1500,
+        "info": "1500px wide recommended"
+      },
+      {
+        "type": "textarea",
+        "id": "feature_image_1_copy",
+        "label": "Overlay text",
+        "info": "Optional"
+      },
+      {
+        "type": "text",
+        "id": "feature_image_1_cta_url",
+        "label": "Call to action URL",
+        "info": "Optional: remember to use http:\/\/ or relative URLs e.g. \/collections\/all"
+      },
+      {
+        "type": "text",
+        "id": "feature_image_1_cta_text",
+        "label": "Call to action button text",
+        "default": "Shop Now"
+      },
+      {
+        "type": "text",
+        "id": "feature_image_1_custom_height",
+        "label": "Custom height:",
+        "info": "e.g. 500 - use to override full screen default"
+      }
+    ]
+  },
+  {
+    "name": "Home page - featured image 2",
+    "settings": [
+      {
+        "type": "image",
+        "id": "feature_image_2.jpg",
+        "label": "Image",
+        "max-width": 1500,
+        "info": "1500px wide recommended"
+      },
+      {
+        "type": "textarea",
+        "id": "feature_image_2_copy",
+        "label": "Overlay text",
+        "info": "Optional"
+      },
+      {
+        "type": "text",
+        "id": "feature_image_2_cta_url",
+        "label": "Call to action URL",
+        "info": "Optional: remember to use http:\/\/ or relative URLs e.g. \/collections\/all"
+      },
+      {
+        "type": "text",
+        "id": "feature_image_2_cta_text",
+        "label": "Call to action button text",
+        "default": "Shop Now"
+      },
+      {
+        "type": "text",
+        "id": "feature_image_2_custom_height",
+        "label": "Custom height:",
+        "info": "e.g. 500 - use to override full screen default"
+      }
+    ]
+  },
+  {
+    "name": "Home page - video",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "feature_video_embed",
+        "label": "Feature video embed"
+      }
+    ]
+  },
+  {
+    "name": "Home page - featured collections",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Collection 1:"
+      },
+      {
+        "type": "collection",
+        "id": "feature_collection_1",
+        "label": "Choose collection:"
+      },
+      {
+        "type": "text",
+        "id": "feature_collection_1_cta",
+        "label": "Call to action text",
+        "default": "Shop Now"
+      },
+      {
+        "type": "header",
+        "content": "Collection 2:"
+      },
+      {
+        "type": "collection",
+        "id": "feature_collection_2",
+        "label": "Choose collection:"
+      },
+      {
+        "type": "text",
+        "id": "feature_collection_2_cta",
+        "label": "Call to action text",
+        "default": "Shop Now"
+      }
+    ]
+  },
+  {
+    "name": "Home page - Instagram",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Display Instagram images on the home page."
+      },
+      {
+        "type": "text",
+        "id": "instagram_section_title",
+        "label": "Section title",
+        "default": "Instagram",
+        "info": "Leave blank if you don't want to show a section title."
+      },
+      {
+        "type": "text",
+        "id": "instagram_access_token",
+        "label": "Instagram access token",
+        "info": "See: [Grab your Instagram Access Token](http:\/\/www.girafficthemes.com\/instagram)"
+      }
+    ]
+  },
+  {
+    "name": "Home page - tour and events",
+    "settings": [
+      {
+        "type": "text",
+        "id": "tour_section_title",
+        "label": "Section title",
+        "default": "Tour"
+      },
+      {
+        "type": "select",
+        "id": "tour_source",
+        "label": "Choose source:",
+        "options": [
+          {
+            "value": "",
+            "label": "(none)"
+          },
+          {
+            "value": "tour_songkick",
+            "label": "Songkick"
+          },
+          {
+            "value": "tour_bandsintown",
+            "label": "Bands In Town"
+          },
+          {
+            "value": "tour_eventbrite",
+            "label": "EventBrite"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "number_of_events",
+        "label": "Max number of events to show:",
+        "options": [
+          {
+            "value": "all",
+            "label": "All"
+          },
+          {
+            "value": "5",
+            "label": "5"
+          },
+          {
+            "value": "10",
+            "label": "10"
+          },
+          {
+            "value": "20",
+            "label": "20"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Songkick"
+      },
+      {
+        "type": "text",
+        "id": "songkick_artist_id",
+        "label": "Songkick artist ID"
+      },
+      {
+        "type": "header",
+        "content": "Bands In Town"
+      },
+      {
+        "type": "text",
+        "id": "bandsintown_name",
+        "label": "Bands in town artist name"
+      },
+      {
+        "type": "header",
+        "content": "Eventbrite"
+      },
+      {
+        "type": "text",
+        "id": "eventbrite_access_token",
+        "label": "Eventbrite access token",
+        "info": "See: [Grab your Eventbrite Access Token](http:\/\/www.girafficthemes.com\/eventbrite)"
+      }
+    ]
+  },
+  {
+    "name": "Home page - featured blog",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Show last 3 blog posts on home page"
+      },
+      {
+        "type": "blog",
+        "id": "homepage_blog",
+        "label": "Blog for home page"
+      }
+    ]
+  },
+  {
+    "name": "Collection page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_tag_filter",
+        "label": "Enable filtering by product tag"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_sort_filter",
+        "label": "Enable collection sorting"
+      }
+    ]
+  },
+  {
+    "name": "Product page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_quantity",
+        "label": "Show quantity option"
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_drop_down_labels",
+        "label": "Hide label on selects"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_share",
+        "label": "Show social media share links"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_related_products",
+        "label": "Show related products"
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "footer_newsletter_enable",
+        "label": "Show newsletter field"
+      },
+      {
+        "type": "text",
+        "id": "newsletter_form_action",
+        "label": "MailChimp form action URL",
+        "info": "[Where do I find my MailChimp form action URL?](http:\/\/docs.shopify.com\/support\/configuration\/store-customization\/where-do-i-get-my-mailchimp-form-action)"
+      },
+      {
+        "type": "checkbox",
+        "id": "footer_show_theme_credit",
+        "label": "Show theme credit"
+      },
+      {
+        "type": "checkbox",
+        "id": "footer_show_top_border",
+        "label": "Show top border"
+      }
+    ]
+  },
+  {
+    "name": "Cart page",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable order notes"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_vendor_enable",
+        "label": "Show product vendor"
+      },
+      {
+        "type": "checkbox",
+        "id": "ajax_cart_enable",
+        "label": "Stay on the current page when an item is added to the cart"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_social_icons_header",
+        "label": "Show in header"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_social_icons_footer",
+        "label": "Show in footer \/ drawer"
+      },
+      {
+        "type": "header",
+        "content": "Accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_url",
+        "label": "Facebook",
+        "info": "https:\/\/www.facebook.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_url",
+        "label": "Instagram",
+        "info": "https:\/\/www.instagram.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_url",
+        "label": "Twitter",
+        "info": "https:\/\/www.twitter.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest_url",
+        "label": "Pinterest",
+        "info": "https:\/\/www.pinterest.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_soundcloud_url",
+        "label": "Soundcloud",
+        "info": "https:\/\/www.soundcloud.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_spotify_url",
+        "label": "Spotify",
+        "info": "https:\/\/open.spotify.com\/artist\/3WrFJ7ztbogyGnTHbHJFl2"
+      },
+      {
+        "type": "text",
+        "id": "social_flickr_url",
+        "label": "Flickr",
+        "info": "https:\/\/www.flickr.com\/photos\/shopify\/"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_url",
+        "label": "Vimeo",
+        "info": "https:\/\/www.vimeo.com\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_apple_url",
+        "label": "Apple",
+        "info": "https:\/\/geo.itunes.apple.com\/us\/album\/abbey-road\/id401186200?mt=1&app=music"
+      },
+      {
+        "type": "text",
+        "id": "social_lastfm_url",
+        "label": "Last FM",
+        "info": "http:\/\/www.last.fm\/music\/Shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_url",
+        "label": "YouTube",
+        "info": "https:\/\/www.youtube.com\/user\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_google_url",
+        "label": "Google",
+        "info": "https:\/\/plus.google.com\/+shopify\/"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_url",
+        "label": "Tumblr",
+        "info": "http:\/\/shopify.tumblr.com\/"
+      },
+      {
+        "type": "text",
+        "id": "social_triplej_url",
+        "label": "Triple J",
+        "info": "https:\/\/www.triplejunearthed.com\/artist\/shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_mixcloud_url",
+        "label": "Mixcloud",
+        "info": "https:\/\/www.mixcloud.com\/shopify\/"
+      }
+    ]
+  }
+]

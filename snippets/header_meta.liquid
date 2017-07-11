@@ -1,0 +1,23 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<!-- /snippets/header_meta.liquid -->
+{% include 'ly-languages-switcher' %}
+{% if settings.enable_social_icons_header %}        
+{% include 'social', social_location: 'header' %}
+{% endif %}
+<div class="cart-user-box {% if shop.customer_accounts_enabled %}accounts-on{% endif %}">
+  
+  {% if shop.customer_accounts_enabled %}
+  <a data-list="customer" href="/" class="account-link site-nav--has-dropdown medium-down--hide"><span class="account-icon"></span></a>
+  {% endif %}
+  
+  {% if settings.header_show_search_icon %}
+  <a data-list="search" href="/" class="search-link site-nav--has-dropdown medium-down--hide"><span class="search-icon"></span></a>
+  {% endif %}
+    
+  
+  <a href="/cart" class="site-header__cart-toggle" aria-controls="CartDrawer" aria-expanded="false">
+    <span id="CartCount">{{ cart.item_count }}</span>
+    <span class="icon icon-cart" aria-hidden="true"></span>
+  </a>
+
+</div>

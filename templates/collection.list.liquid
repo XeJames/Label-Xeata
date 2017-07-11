@@ -1,0 +1,163 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /templates/collection.list.liquid -->
+{% comment %}
+
+  By using a variation of the 'view all' parameter technique, you can create
+  a custom layout for any template by adding ?view=xxxx
+
+  In this example, you can have a list view of your collection page by going to
+  /collections/all?view=list
+
+  For more information on collection tags:
+    - http://docs.shopify.com/themes/liquid-variables/collection
+
+  For more information on the ?view parameter:
+    - http://docs.shopify.com/support/configuration/store-customization/can-i-show-more-than-50-products-on-my-homepage-can-i-add-a-view-all-function-to-my-collection-pages#add-view-all
+
+{% endcomment %}
+
+{% paginate collection.products by 12 %}
+
+{% include 'breadcrumb' %}
+
+{% comment %}
+  Use .grid--rev so that the collection tags appear below the products on mobile
+{% endcomment %}
+<div class="grid--rev">
+  <div class="grid__item large--three-quarters">
+
+    {% comment %}
+      Different markup if a collection description exists
+    {% endcomment %}
+    {% if collection.description != blank %}
+      <header class="section-header">
+        <h1 class="section-header__title">{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+        <div class="rte rte--header">
+          {% comment %}ly_code_replace_for_[ collection.description ]_begin{% endcomment %}{% include 'ly-description' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+        </div>
+      </header>
+      <hr>
+      <div class="section-header">
+        <div class="section-header__right">
+          {% include 'collection-sorting' %}
+        </div>
+      </div>
+    {% else %}
+      <header class="section-header">
+        <h1 class="section-header__title section-header__left">{% comment %}ly_code_replace_for_[ collection.title ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+        <div class="section-header__right">
+          {% include 'collection-sorting' %}
+        </div>
+      </header>
+    {% endif %}
+
+    {% comment %}
+      Use class grid-uniform to have evenly sized columns clear
+      each other properly at each breakpoint.
+    {% endcomment %}
+    <div class="grid-uniform">
+
+      <!-- begin product list output -->
+      {% for product in collection.products %}
+
+        {% comment %}
+          Check if the product is on sale and set a variable to be used below.
+        {% endcomment %}
+        {% assign on_sale = false %}
+        {% if product.compare_at_price > product.price %}
+          {% assign on_sale = true %}
+        {% endif %}
+
+        {% comment %}
+          Check if the product is sold out and set a variable to be used below.
+        {% endcomment %}
+        {% assign sold_out = true %}
+        {% if product.available %}
+          {% assign sold_out = false %}
+        {% endif %}
+
+        <div class="grid__item">
+
+          {% comment %}
+            Link to your product with the 'within: collection' filter for the link to be aware of the collection.
+            This allows you to create collection-based navigation on the product page.
+
+            Results of using 'within: collection':
+            - Instead of a URL with /products/product-handle
+              you would get /collections/collection-handle/products/product-handle
+
+            For more info on navigation within a collection
+              - http://docs.shopify.com/support/your-store/collections/how-to-navigate-within-a-collection
+          {% endcomment %}
+          <div class="grid large--display-table">
+            <div class="grid__item large--one-fifth large--display-table-cell medium--one-third">
+              <a href="{{ product.url | within: collection }}">
+                <img src="{{ product.featured_image.src | img_url: 'medium' }}" alt="{{ product.featured_image.alt | escape }}" class="grid__image">
+              </a>
+            </div>
+            <div class="grid__item large--four-fifths large--display-table-cell medium--two-thirds">
+              <div class="grid">
+                <div class="grid__item large--three-quarters medium--two-thirds">
+                  <p class="h6">{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</p>
+                  <div class="rte">
+                    <p>{% comment %}ly_code_replace_for_[ product.content | strip_html | truncatewords: 30 ]_begin{% endcomment %}{% include 'ly-content' with product %}{{ ly_translation | strip_html | truncatewords: 30 }}{% comment %}ly_code_replace_end{% endcomment %}</p>
+                  </div>
+                </div>
+                <div class="grid__item large--one-quarter medium--one-third">
+                  {% comment %}
+                    You can show a leading 'from' or 'up to' by checking 'product.price_varies'
+                    if your variants have different prices.
+                  {% endcomment %}
+                  {% if on_sale %}
+                    {% if product.price_varies %}
+                      {% assign sale_price = product.price | money %}
+                      {% comment %}ly_i18n_replace_for_[ 'products.product.on_sale_from_html' | t: price: sale_price ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.on_sale_from_html' | t: price: sale_price }}{% endcapture %}{% include 'ly-static-string' with '3885908' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = sale_price  %}{% assign ly_template = ly_template | replace: '[[price]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+                    {% else %}
+                      <strong>{% comment %}ly_i18n_replace_for_[ 'products.product.on_sale' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.on_sale' | t }}{% endcapture %}{% include 'ly-static-string' with '3885909' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</strong>
+                      {{ product.price | money }}
+                    {% endif %}
+                  {% else %}
+                    {% if product.price_varies %}
+                      {% assign price = product.price | money %}
+                      {% comment %}ly_i18n_replace_for_[ 'products.general.from_text_html' | t: price: price ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.from_text_html' | t: price: price }}{% endcapture %}{% include 'ly-static-string' with '3885911' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = price  %}{% assign ly_template = ly_template | replace: '[[price]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+                    {% else %}
+                      {{ product.price | money }}
+                    {% endif %}
+                  {% endif %}
+                  {% if sold_out %}
+                    <br><strong>{% comment %}ly_i18n_replace_for_[ 'products.product.sold_out' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.sold_out' | t }}{% endcapture %}{% include 'ly-static-string' with '3885912' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</strong>
+                  {% endif %}
+                  {% if on_sale %}
+                    <br><span class="visually-hidden">{% comment %}ly_i18n_replace_for_[ 'products.general.regular_price' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.regular_price' | t }}{% endcapture %}{% include 'ly-static-string' with '3885913' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span><s>{{ product.compare_at_price | money }}</s>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {% else %}
+
+        <div class="grid__item">
+          <p>{% comment %}ly_i18n_replace_for_[ 'collections.general.no_matches' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.general.no_matches' | t }}{% endcapture %}{% include 'ly-static-string' with '3885914' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+        </div>
+
+      {% endfor %}
+      <!-- //product list output -->
+
+    </div>
+
+    {% if paginate.pages > 1 %}
+      <hr>
+      <div class="pagination">
+        {{ paginate | default_pagination | replace: '&laquo; <ly-as-3885906>Previous</ly-as-3885906>', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+      </div>
+    {% endif %}
+
+  </div>
+
+  <div class="grid__item large--one-quarter">
+    {% include 'collection-sidebar' %}
+  </div>
+</div>
+
+{% endpaginate %}

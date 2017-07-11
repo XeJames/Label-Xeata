@@ -1,0 +1,163 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/section_single-product.liquid -->
+{% assign product = all_products[settings.feature_single_product]  %}
+<section class="single-product section-product">
+
+  {% if settings.single_product_section_title != '' %}
+  <div class="wrapper">
+    <h2 class="section_title">
+      {{ settings.single_product_section_title }}
+      <div class="border"></div>
+    </h2>
+  </div>
+  {% endif %}
+  
+  <div class="wrapper">
+    <div class="section-content">
+      <div class="grid--table product-single">
+
+        {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+
+        <div class="grid__item large--one-half medium--one-whole text-right image-{{ current_variant.featured_image.position }} single-product-image">
+          <div class="product-single__photos" id="ProductPhoto">
+              {% if product.featured_image.size > 0 %}
+              <a href="{{ product.url }}" ><img src="{{ featured_image | img_url: '1024x1024' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg"></a>
+              {% else %}
+              <a href="/admin/themes/{{ theme.id }}/settings" rel="gallery-1" ><img src="{% comment %}ly_asset_replace_for_[ 'label_no_image.jpg' | asset_url  ]_begin{% endcomment %}{% assign ly_asset = 'label_no_image.jpg' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}" alt="" id="ProductPhotoImg"></a>
+              {% endif %}
+          </div>
+        </div>
+    
+        <div class="grid__item large--one-half medium--one-whole single-product-content text-left">
+          
+          
+          <h3 class="standard-single">
+            {% if product.title != '' %}
+            <a href="{{ product.url }}" >{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+            {% else %}
+            <a href="/admin/themes/{{ theme.id }}/settings" >{% comment %}ly_i18n_replace_for_[ 'homepage.onboarding.product_title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.onboarding.product_title' | t }}{% endcapture %}{% include 'ly-static-string' with '3885828' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+            {% endif %}
+          </h3>
+          <span id="ProductPrice" class="standard-index" itemprop="price">
+            {{ current_variant.price | money }}
+          </span>
+          
+          {% if settings.single_product_subheader != '' %}
+            <h5 class="secondary">{{ settings.single_product_subheader }}</h5>
+          {% endif %}
+          
+          {% if settings.single_product_description != '' %}
+            <div class="feature-copy">{% comment %}ly_new_settings_replace_for_[ settings.single_product_description ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id3885826"] %}{% assign ly_translation = shop.metafields[namespace]["id3885826"] %}{% else %}{% assign ly_translation = settings.single_product_description %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}</div>
+          {% else %}
+            <div class="feature-copy">{% comment %}ly_code_replace_for_[ product.description ]_begin{% endcomment %}{% include 'ly-description' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</div>
+          {% endif %} 
+            
+          {% comment %}
+            ID addToCartForm is a selector for the ajax cart plugin
+          {% endcomment %}
+          {% if settings.single_product_behaviour == 'add_to_cart' %}
+          <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-vertical">
+    
+            {% comment %}
+              Add product variants as a dropdown.
+                - By default, each variant (or combination of variants) will display as its own <option>
+                - To separate these into multiple steps, which we suggest, use option_selection.js (see below)
+    
+              You can leverage jQuery to add a callback on page load and each time the select element changes:
+                - Include option_selection.js (as seen at the bottom of this file)
+                - This allows you to use JavaScript anytime the variant dropdown changes
+                - This also separates out your variant options (ie. size, color, etc.) to separate select elements
+    
+              For more information on products with multiple options, visit:
+                - http://docs.shopify.com/support/your-website/themes/can-i-make-my-theme-use-products-with-multiple-options#update-product-liquid
+            {% endcomment %}
+            <select name="id" id="productSelect" class="product-single__variants">
+              {% for variant in product.variants %}
+                {% if variant.available %}
+    
+                  {% comment %}
+                    Note: if you use option_selection.js, your <select> tag will be overwritten, meaning what you have inside <option> will not reflect what you coded below.
+                  {% endcomment %}
+                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{% comment %}ly_code_replace_for_[ variant.title ]_begin{% endcomment %}{% include 'ly-title' with variant %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}  - {{ variant.price | money_with_currency }}</option>
+    
+                {% else %}
+                  <option disabled="disabled">
+                    {% comment %}ly_code_replace_for_[ variant.title ]_begin{% endcomment %}{% include 'ly-title' with variant %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %} - {% comment %}ly_i18n_replace_for_[ 'products.product.sold_out' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.sold_out' | t }}{% endcapture %}{% include 'ly-static-string' with '3885829' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+    
+            <span class="visually-hidden">{% comment %}ly_i18n_replace_for_[ 'products.general.regular_price' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.regular_price' | t }}{% endcapture %}{% include 'ly-static-string' with '3885830' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+
+            {% if product.compare_at_price_max > product.price %}
+              <span class="visually-hidden">{% comment %}ly_i18n_replace_for_[ 'products.general.sale_price' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.sale_price' | t }}{% endcapture %}{% include 'ly-static-string' with '3885831' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+              <p id="ComparePrice" class="feature-text">
+                {% comment %}ly_i18n_replace_for_[ 'products.product.compare_at' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.compare_at' | t }}{% endcapture %}{% include 'ly-static-string' with '3885832' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} {{ current_variant.compare_at_price | money }}
+              </p>
+            {% endif %}
+            
+            {% if settings.single_product_show_quantity %}
+            <div class="quantity-wrapper">
+              <label for="Quantity" class="quantity-selector">{% comment %}ly_i18n_replace_for_[ 'products.product.quantity' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.quantity' | t }}{% endcapture %}{% include 'ly-static-string' with '3885833' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</label>
+              <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+            </div>
+            {% endif %}
+            
+            <div class="cta-content">
+              <button type="submit" name="add" id="AddToCart" class="btn btn--medium">
+                <span id="AddToCartText" class="cart-text">{% comment %}ly_i18n_replace_for_[ 'products.product.add_to_cart' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.add_to_cart' | t }}{% endcapture %}{% include 'ly-static-string' with '3885834' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+                <span id="AddingToCartText" class="cart-text">{% comment %}ly_i18n_replace_for_[ 'products.product.adding_to_cart' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.adding_to_cart' | t }}{% endcapture %}{% include 'ly-static-string' with '3885835' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+                <span id="AddedToCartText" class="cart-text">{% comment %}ly_i18n_replace_for_[ 'products.product.added_to_cart' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.added_to_cart' | t }}{% endcapture %}{% include 'ly-static-string' with '3885836' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+                 <span class="next-arrow"></span>
+              </button>
+              <div class="cta-complete">
+                {% comment %}ly_i18n_replace_for_[ 'products.product.added_to_cart' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.added_to_cart' | t }}{% endcapture %}{% include 'ly-static-string' with '3885836' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}! {% comment %}ly_i18n_replace_for_[ 'products.product.add_to_cart_confirm_html' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.add_to_cart_confirm_html' | t }}{% endcapture %}{% include 'ly-static-string' with '3885837' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}. 
+              </div>
+            </div>
+    
+          </form>
+          
+          {% else %}
+          <a class="btn btn--medium" href="{{ product.url }}">
+            {% comment %}ly_new_settings_replace_for_[ settings.single_product_cta_text ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id3885827"] %}{% assign ly_translation = shop.metafields[namespace]["id3885827"] %}{% else %}{% assign ly_translation = settings.single_product_cta_text %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}
+             <span class="next-arrow"></span>
+          </a>
+          {% endif %}
+          
+      </div>
+    </div>
+  </div>
+
+{% if settings.single_product_behaviour == 'add_to_cart' %}
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+<script>
+  var selectCallback = function(variant, selector) {
+    Label.productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector,
+      firstLoad: true,
+      product: {{ product | json }}
+    }); 
+  };
+
+  jQuery(function($) {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('.selector-wrapper').hide();
+    {% endif %}
+  });
+</script>
+{% endif %}
+</section>

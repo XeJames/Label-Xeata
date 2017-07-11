@@ -1,0 +1,25 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/section_feature-text.liquid -->
+
+{% assign push = '' %}
+{% if settings.section_title_align == 'center' %}
+{% assign push = 'push--large--one-eighth' %}
+{% endif %}
+
+{% assign featured_page = settings.homepage_featured_content %}
+
+<section class="feature-text">
+    <div class="wrapper">
+
+      <h2 class="section_title">
+        {% comment %}ly_code_replace_for_[ pages[featured_page].title ]_begin{% endcomment %}{% include 'ly-title' with pages[featured_page] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+        <div class="border"></div>
+      </h2>
+
+      <div class="grid section-content">
+        <div class="grid__item large--six-eighths {{ push }} medium-down--one-whole feature-copy rte">
+            {% comment %}ly_code_replace_for_[ pages[featured_page].content ]_begin{% endcomment %}{% include 'ly-content' with pages[featured_page] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+        </div>
+      </div>
+    </div>
+</section>
+

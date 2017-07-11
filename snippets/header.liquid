@@ -1,0 +1,119 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<!-- /snippets/header.liquid -->
+
+{% assign extraClasses = '' %}
+
+{% if template == 'index' %}
+{% assign extraClasses =  extraClasses | append: 'homepage-header-colors' %}
+{% endif %}
+
+{% if settings.enable_hero_image and template == 'index' %}
+{% assign extraClasses =  extraClasses | append: ' hero-active' %}
+{% endif %}
+
+
+{% assign border_class = '' %}
+{% if template == 'index' %}
+  {% if settings.homepage_section_1 != 'section_feature-image-1' and settings.homepage_section_1 != 'section_feature-image-2' and settings.homepage_section_1 != 'section_feature-video' %}
+    {% assign border_class = 'show-border' %}
+  {% endif %}
+  {% if settings.feature_product_background != settings.color_body_bg and settings.homepage_section_1 == 'section_single-product' %}
+    {% assign border_class = '' %}
+  {% endif %}
+{% else %}
+  {% assign border_class = 'show-border' %}
+{% endif %}
+
+{% if settings.header_layout == 'layout_left' %}
+{% assign extraClasses =  extraClasses | append: ' logo-aligned-left' %}
+{% else %}
+{% assign extraClasses =  extraClasses | append: ' nav-aligned-left' %}
+{% endif %}
+
+<header class="site-header {{ extraClasses }} {{ border_class }}" role="banner">
+
+  {% if settings.enable_hero_image and template == 'index' %}
+  <div class="hero-image-header-wrap">
+  {% endif %}
+  <div class="wrapper">
+    <div class="headerInnerWrap">
+      <div class="grid--full grid--table">
+        
+        {% assign site-title_classes = ""  %}
+        {% assign cart_classes = ""  %}
+        {% assign menu-nav_classes = ""  %}
+        
+        <!-- if logo is on the left -->
+        {% if settings.header_layout == 'layout_left' %}
+  
+          {% assign site-title_classes = "xlarge--hide large--hide"  %}
+          {% assign menu-nav_classes = "large--hide"  %}
+          
+          {% if settings.enable_hero_image and template == 'index' %}
+            {% assign menu-nav_classes = "large--hide"  %}
+            {% assign cart_classes = "large--one-third"  %}
+            {% assign site-title_classes = "large--hide" %}
+          {% else %} 
+            {% assign cart_classes = "large--one-quarter"  %}
+          {% endif %}
+          
+          <div class="grid__item large--three-quarters medium-down--hide logo-and-nav logo-left text-left">
+            {% unless settings.enable_hero_image and template == 'index' %}
+            {% include 'header_logo' %}
+            {% endunless %}
+            {% include 'header_navigation' %}
+          </div> <!-- end logo -->
+        
+        <!-- else if logo is in the center-->
+        {% else %}
+            
+            {% if settings.logo_use_image %}
+              {% assign cart_classes = "xlarge--one-third large--one-third"  %}
+              {% assign menu-nav_classes = "xlarge--one-third large--one-third"  %}
+              {% assign site-title_classes = "xlarge--one-third large--one-third"  %}
+            {% else %}
+              {% assign cart_classes = "xlarge--one-third large--one-quarter"  %}
+              {% assign menu-nav_classes = "xlarge--one-third large--one-quarter"  %}
+              {% assign site-title_classes = "xlarge--one-third large--two-quarters"  %}
+            {% endif %}
+  
+            {% if settings.enable_hero_image and template == 'index' %}
+              {% assign menu-nav_classes = "large--two-thirds"  %}
+              {% assign cart_classes = "large--one-third"  %}
+              {% assign site-title_classes = "large--hide" %}
+            {% endif %} 
+            
+        {% endif %}
+  
+        <div class="grid__item {{ menu-nav_classes }} nav-left-only {% if settings.header_layout == 'layout_mobile' %}always-burger-menu{% endif %} medium-down--one-eighth text-left">
+          
+          {% include 'header_burger-menu' %}
+          {% include 'header_navigation' %}
+         
+        </div><!-- end navigation / drawer -->
+        
+        <div class="grid__item {{ site-title_classes }}  medium-down--six-eighths text-center site-title_container">
+          {% unless settings.enable_hero_image and template == 'index' %}
+          {% include 'header_logo' %}
+          {% endunless %}
+        </div> <!-- end logo -->
+        
+        <div class="grid__item {{ cart_classes }}  medium-down--one-eighth text-right header-meta">
+          {% include 'header_meta' %}
+        </div><!-- end cart / social -->
+        
+      </div><!-- end grid item -->
+      
+      <div class="grid--full sub-nav">
+        {% include 'navigation_sub-nav' %}
+      </div>
+    </div><!-- end headerInnerWrap -->
+  </div><!-- end wrapper -->
+  
+  {% if settings.enable_hero_image and template == 'index' %}
+  </div> <!-- end additional wrapper for header content -->
+  {% include 'header_hero-image' %}
+  {% endif %}
+  
+</header>
+

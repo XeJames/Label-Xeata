@@ -1,0 +1,23 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/comment.liquid -->
+{% comment %}
+
+  This snippet generates the structure of a comment.
+  It is used to show not only recent comments, but also comments that were
+  just published but not yet approved.
+
+  More information:
+   - http://docs.shopify.com/themes/liquid-variables/comment
+
+{% endcomment %}
+
+<div class="comment">
+  <div class="rte feature-copy">
+    {% comment %}ly_code_replace_for_[ comment.content ]_begin{% endcomment %}{% include 'ly-content' with comment %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+  </div>
+
+  <span class="secondary">
+    {% capture author %}<strong>{{ comment.author }}</strong>{% endcapture %}
+    {% capture date %}<strong><time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">{{ comment.created_at | date: format: 'month_day_year' }}</time></strong>{% endcapture %}
+    {% comment %}ly_i18n_replace_for_[ 'blogs.article.comment_meta_html' | t: author: author, date: date ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.article.comment_meta_html' | t: author: author, date: date }}{% endcapture %}{% include 'ly-static-string' with '3885749' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = author %}{% assign ly_template = ly_template | replace: '[[author]]', replacement %}{% assign replacement = date  %}{% assign ly_template = ly_template | replace: '[[date]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+  </span>
+</div>

@@ -1,0 +1,29 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /templates/page.liquid -->
+<section class="page">
+  <div class="grid">
+  
+    <div class="grid__item large--two-thirds push--large--one-sixth page-item">
+      
+      <div class="ds_banner_image about-xeata">
+        <img src="//cdn.shopify.com/s/files/1/1156/5806/files/1_177d5b0e-7b45-4985-be00-4ca738b4f266.jpg?188939072809043828" />        
+      </div>
+      
+      <div class="ds_banner_image pricing">
+        <img src="//cdn.shopify.com/s/files/1/1156/5806/files/3.jpg?3395980889409432680" />        
+      </div>
+      
+      <div class="ds_banner_image why-charging-kiosks">
+        <img src="//cdn.shopify.com/s/files/1/1156/5806/files/kiosks.jpg?770822336786488899" />        
+      </div>
+      
+      <h1 class="standard-single">{% comment %}ly_code_replace_for_[ page.title ]_begin{% endcomment %}{% include 'ly-title' with page %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</h1>
+      {% comment %}
+        Regular page content goes here.
+      {% endcomment %}
+      <div class="rte feature-copy">
+        {% comment %}ly_code_replace_for_[ page.content ]_begin{% endcomment %}{% include 'ly-content' with page %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+      </div>
+    </div>
+  
+  </div>
+</section>

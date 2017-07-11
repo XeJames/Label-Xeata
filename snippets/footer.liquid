@@ -1,0 +1,210 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/footer.liquid -->
+
+{% assign footer_nav_classes = 'large--one-whole medium--one-whole' %}
+{% assign footer_newsletter_classes = '' %}
+{% assign footer_social_classes = 'large--two-twelfths desktop-down--one-half' %}
+
+<!-- classes for newsletter but no social icons -->
+
+{% if settings.footer_newsletter_enable %}
+{% if settings.enable_social_icons_footer %}
+{% else %}
+{% assign footer_nav_classes = 'large--two-thirds medium--one-whole' %}
+{% assign footer_newsletter_classes = 'large--one-third medium-down--one-whole' %}
+{% endif %}
+{% endif %}
+
+<!-- classes for social but no newsletter -->
+
+{% if settings.enable_social_icons_footer %}
+{% if settings.footer_newsletter_enable %}
+{% else %}
+{% assign footer_nav_classes = 'large--two-thirds medium--one-whole' %}
+{% assign footer_social_classes = 'large--one-third medium-down--one-whole' %}
+{% endif %}
+{% endif %}
+
+
+<!-- classes for nav, social and newsletter -->
+{% if settings.footer_newsletter_enable and settings.enable_social_icons_footer %}
+{% assign footer_nav_classes = 'large--six-twelfths medium--one-whole' %}
+{% assign footer_newsletter_classes = 'large--four-twelfths desktop-down--one-half medium--one-whole' %}
+{% assign footer_social_classes = 'large--two-twelfths desktop-down--one-half medium--one-whole' %}
+{% endif %}
+
+
+<div class="ds_new_section">
+  <div class="main-content  wrapper " role="main">
+    <section class="page">
+      <div class="grid">
+        <div class="grid__item large--two-thirds push--large--one-sixth page-item">
+          <div class="rte feature-copy">
+            <h3 style="color: #d4283c;"><ly-as-3885777>Who benefits from charging kiosks?</ly-as-3885777></h3>
+            <p>Retailers &amp; entertainment venues:</p>
+            <ul>
+              <li><ly-as-3885779>Stores, restaurants, bars, clubs, ski hills, hotels</ly-as-3885779></li>
+            </ul>
+            <p><ly-as-3885780>Event organizers:</ly-as-3885780></p>
+            <ul>
+              <li><ly-as-3885781>Festivals, trade shows, conferences, private events (weddings, bar mitzvahs)</ly-as-3885781></li>
+            </ul>
+            <p>Public facilities &amp; institutions:</p>
+            <ul>
+              <li><ly-as-3885783>University campuses, churches, airports, hospitals</ly-as-3885783></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+
+<!-- begin site-footer -->
+<footer class="site-footer " role="contentinfo">
+  <div class="wrapper">
+    <div class="grid">
+      <div class="grid__item">
+
+        <hr class="border-top">
+
+        <div class="grid footer-top-row">
+          
+          {% comment %}
+          <div class="grid__item {{ footer_nav_classes }} footer-grid-nav">
+          {% endcomment %}
+          
+          <div class="grid__item large--one-third medium--one-whole footer-grid-nav">
+          
+            <!-- begin site-nav -->
+            
+            <h3 class="secondary">{% comment %}ly_i18n_replace_for_[ 'layout.footer.navigation_title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.footer.navigation_title' | t }}{% endcapture %}{% include 'ly-static-string' with '3885785' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h3>
+            
+            <ul class="footer-nav" id="AccessibleNav">
+              {% for link in linklists.footer.links %}
+                {% comment %}
+                  Create a dropdown menu by naming a linklist the same as a link in the parent nav
+                  
+                  More info on dropdowns:
+                    - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
+                {% endcomment %}
+                {% assign child_list_handle = link.title | handleize %}
+                {% if linklists[child_list_handle].links != blank %}
+                  <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-haspopup="true">
+                    <a href="{{ link.url }}" class="site-nav__link">
+                      {% comment %}ly_code_replace_for_[ link.title ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+                      <span class="icon icon-arrow-down" aria-hidden="true"></span>
+                    </a>
+                    <ul class="site-nav__dropdown">
+                      {% for childlink in linklists[child_list_handle].links %}
+                        <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+                          <a href="{{ childlink.url }}" class="site-nav__link">{% comment %}ly_code_replace_for_[ childlink.title | escape ]_begin{% endcomment %}{% include 'ly-title' with childlink %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                {% else %}
+                  <li {% if link.active %}class="site-nav--active"{% endif %}>
+                    <a href="{{ link.url }}" class="site-nav__link">{% comment %}ly_code_replace_for_[ link.title ]_begin{% endcomment %}{% include 'ly-title' with link %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+            <!-- //site-nav -->
+          </div>
+                    
+        {% if settings.footer_newsletter_enable %}
+            
+            
+          {% comment %}
+          <div class="grid__item {{ footer_newsletter_classes }} footer-newsletter footer-grid-newsletter">
+          {% endcomment %}  
+          
+          <div class="grid__item large--one-third medium-down--one-whole footer-newsletter footer-grid-newsletter">
+            
+           {% comment %}
+            MailChimp is the go-to newsletter service for Shopify.
+            Use the link below to find your MailChimp form action
+            and insert it in your site settings.
+
+            MailChimp newsletter integration and requirement:
+             - http://docs.shopify.com/support/configuration/store-customization/where-do-i-get-my-mailchimp-form-action
+          {% endcomment %}
+          <h3 class="secondary">{% comment %}ly_i18n_replace_for_[ 'layout.footer.newsletter_title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.footer.newsletter_title' | t }}{% endcapture %}{% include 'ly-static-string' with '3885786' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h3>
+          {% if settings.newsletter_form_action != blank %}
+            {% assign form_action = settings.newsletter_form_action %}
+          {% else %}
+            {% assign form_action = '#' %}
+          {% endif %}
+           {% if settings.newsletter_form_action != blank %}
+          <form action="{{ form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+            <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.newsletter_email' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.newsletter_email' | t }}{% endcapture %}{% include 'ly-static-string' with '3885787' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" name="EMAIL" id="mail" class="input-group-field" aria-label="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.newsletter_email' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.newsletter_email' | t }}{% endcapture %}{% include 'ly-static-string' with '3885787' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}" autocorrect="off" autocapitalize="off">
+            <span class="input-group-btn">
+              <input type="submit" class="btn" name="subscribe" id="subscribe" value="{% comment %}ly_i18n_replace_for_[ 'general.newsletter_form.submit' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.newsletter_form.submit' | t }}{% endcapture %}{% include 'ly-static-string' with '3885788' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}">
+            </span>
+          </form>
+          {% else %}
+          {% comment %}ly_i18n_replace_for_[ 'homepage.onboarding.complete_setup_html' | t: theme_id: theme.id ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.onboarding.complete_setup_html' | t: theme_id: theme.id }}{% endcapture %}{% include 'ly-static-string' with '3885790' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = theme.id  %}{% assign ly_template = ly_template | replace: '[[theme_id]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} 
+          {% endif %}
+          </div>
+        {% endif %} 
+          
+        {% if settings.enable_social_icons_footer %}
+          <div class="grid__item {{ footer_social_classes }}  footer-grid-social">
+            <h3 class="secondary">{% comment %}ly_i18n_replace_for_[ 'layout.footer.social_title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.footer.social_title' | t }}{% endcapture %}{% include 'ly-static-string' with '3885791' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h3>
+            {% include 'social', social_location: 'footer' %}
+          </div>
+        {% endif %}
+          
+          <!-- footer social -->
+          <div class="grid__item large--one-third medium-down--one-whole footer-social">
+            <h3 class="secondary"><ly-as-3885784>Social</ly-as-3885784></h3>
+            <a href="https://www.linkedin.com/in/james-white-b895783" target="_blank">
+              <img src="//cdn.shopify.com/s/files/1/1156/5806/files/LinkedIn_Logo_b6b3f8a5-cf34-4208-ab1a-df4e27992f94.png?7966687077749290205" />
+            </a>              
+          </div>
+            
+        </div>
+            
+      </div>
+
+      
+      <div class="grid__item bottom_row">
+        
+        <div class="grid">
+           <div class="grid__item large--one-half  footer-meta">
+              <p class="copyright">&copy; {{ 'now' | date: '%Y' }} {{ langify_shop_name | link_to: '/' }}</p>
+              <p class="sub-meta">
+               {% if settings.footer_show_theme_credit %}
+               <span class="theme-credit">
+                 {% comment %}ly_i18n_replace_for_[ 'layout.footer.theme_credit_html' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'layout.footer.theme_credit_html' | t }}{% endcapture %}{% include 'ly-static-string' with '3885792' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+               </span>&nbsp;&#183;&nbsp;
+               {% endif %}
+               <span>{{ powered_by_link }}</span>
+              </p>
+
+           </div>
+           
+           <div class="grid__item large--one-half medium--one-whole text-right">
+            {% comment %}
+            Loop through available payment methods and show their icons.
+            {% endcomment %}
+            {% unless shop.enabled_payment_types == empty %}
+              <ul class="inline-list payment-icons">
+                {% for type in shop.enabled_payment_types %}
+                  <li>
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-{{type}}" aria-hidden="true"></span>
+                      <span class="fallback-text">{{ type | replace: '_',' '}}</span>
+                    </span>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endunless %} 
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- //site-footer -->

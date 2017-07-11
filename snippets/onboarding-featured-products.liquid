@@ -1,0 +1,27 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- snippets/onboarding-featured-products.liquid -->
+<div class="grid__item">
+  <div class="helper-section">
+    <div class="helper-note">
+      <span class="helper-icon"></span>
+      <h3>{% comment %}ly_i18n_replace_for_[ 'homepage.onboarding.modal_title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.onboarding.modal_title' | t }}{% endcapture %}{% include 'ly-static-string' with '3885808' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h3>
+      <p>{% comment %}ly_i18n_replace_for_[ 'homepage.onboarding.no_products_html' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.onboarding.no_products_html' | t }}{% endcapture %}{% include 'ly-static-string' with '3885809' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+      <p><a class="admin-btn-primary" href="/admin/collections?tutorial=Frontpage">{% comment %}ly_i18n_replace_for_[ 'homepage.onboarding.add_product' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.onboarding.add_product' | t }}{% endcapture %}{% include 'ly-static-string' with '3885810' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a></p>
+    </div>
+    <div class="grid-uniform helper-content product-grid">
+      {% for i in (1..4) %}
+        <div class="grid__item one-half large--one-quarter">
+          
+          <div class="grid__image">
+            {% capture imageUrl %}//cdn.shopify.com/s/images/themes/product-{{ i }}.png{% endcapture %}
+            {{ imageUrl | img_tag }}
+          </div>
+          
+          <p class="h6">
+            <span class="product-grid-title">{% comment %}ly_i18n_replace_for_[ 'homepage.onboarding.product_title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.onboarding.product_title' | t }}{% endcapture %}{% include 'ly-static-string' with '3885811' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+          </p>
+          <p class="price">$19.99</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}
+<!-- /snippets/section_feature-image.liquid -->
+
+{% assign image-src = '' %}
+{% assign cta-text = '' %}
+{% assign cta-url = '' %}
+{% assign feature-copy = '' %}
+{% assign width = '' %}
+
+{% if feature_image == 'feature_image_1' %}
+{% assign image-src = 'feature_image_1.jpg' %}
+{% assign cta-text = settings.feature_image_1_cta_text %}
+{% assign cta-url = settings.feature_image_1_cta_url %}
+{% assign feature-copy =  settings.feature_image_1_copy %}
+{% assign width =  settings.feature_image_1_width_select %}
+{% endif %}
+
+{% if feature_image == 'feature_image_2' %}
+{% assign image-src = 'feature_image_2.jpg' %}
+{% assign cta-text = settings.feature_image_2_cta_text %}
+{% assign cta-url = settings.feature_image_2_cta_url %}
+{% assign feature-copy =  settings.feature_image_2_copy %}
+{% endif %}
+
+
+<section class="feature-image {{ feature_image }} ds_video_section">
+  
+  <iframe frameborder="0" height="100%" width="100%" src="https://youtube.com/embed/38v0KAZgIEQ?autoplay=0&controls=0&showinfo=0&autohide=1&rel=0">
+     </iframe>
+  
+   {% comment %}
+   <div class="feature-image-inner" style="background: url('{% comment %}ly_asset_replace_for_[ image-src | asset_url ]_begin{% endcomment %}{% assign ly_asset = image-src %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}') no-repeat center center">
+   
+   <div class="feature-image-inner">
+    <img class="ie8-feature-image" src="{% comment %}ly_asset_replace_for_[ image-src | asset_url ]_begin{% endcomment %}{% assign ly_asset = image-src %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}" />
+    {% if cta-url != '' or feature-copy != '' %}
+    <div class="content-wrapper {% if width == 'full_width' %}wrapper{% endif %}">
+      <div class="grid--full grid--table">
+        <div class="grid__item">
+        
+        {% if feature-copy != '' %}
+        <div class="feature-copy-holder  {% if cta-url != '' %}with-cta{% endif %}">
+        <h3 class="feature-image-overlay">{{ feature-copy }}</h3>
+        </div>
+        {% endif %}
+        
+        {% if cta-url != '' %}
+        <a href="{{ cta-url }}" class="feature-image-cta btn">{{ cta-text }}  <span class="next-arrow"></span></a>
+        {% endif %}
+        
+        </div>
+      </div>
+    
+    </div>
+    {% endif %}
+  </div>
+  {% endcomment %}
+     
+</section>

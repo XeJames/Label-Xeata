@@ -1,0 +1,80 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/section_blog.liquid -->
+
+{% comment %}
+  Loop through three recent blog articles with the following code.
+
+  Since we're not on the blog template, we need to define the blog
+  handle we want to focus on. For this example we'll use the default 'news',
+  but you can create a blog page-specific content if you want.
+{% endcomment %}
+
+
+<section class="homepage-blog">
+ 
+<div class="wrapper">
+  <h2 class="section_title">
+    {% comment %}ly_code_replace_for_[ blogs[settings.homepage_blog].title ]_begin{% endcomment %}{% include 'ly-title' with blogs[settings.homepage_blog] %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+    <div class="border"></div>
+  </h2>
+</div>
+
+<div class="wrapper">
+  <div class="grid section-content">
+    {% for article in blogs[settings.homepage_blog].articles limit:3 %}
+  
+      <div class="grid__item large--one-third">
+        
+        {% if article.image %}
+        <a href="{{ article.url }}">
+        <div class="article-image" style="background: url('{{ article.image.src | img_url: 'large' }}') no-repeat center center">
+        </div>
+        </a>
+        {% elsif article.content contains "<img" %}
+        {% assign src = article.content | split: 'src="' %}
+        {% assign src = src[1] | split: '"' | first | replace: '//cdn', 'http://cdn';; | replace: 'http:http://';;, 'http://';; | remove: 'https:' %}
+        <a href="{{ article.url }}">
+        <div class="article-image" style="background: url('{{src}}') no-repeat center center">
+        </div>
+        </a>
+        {% else %}
+        {% endif %}
+        
+        
+        <h3 class="standard-index"><a href="{{ article.url }}">{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</a></h3>
+        <time class="subheader" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+  
+        {% comment %}
+          Add a surrounding div with class 'rte' to anything that will come from the rich text editor.
+          Since this is just a listing page, you can either use the excerpt or truncate the full article.
+        {% endcomment %}
+        <div class="rte">
+          {% if article.excerpt.size > 0 %}
+            {% comment %}ly_code_replace_for_[ article.excerpt ]_begin{% endcomment %}{% include 'ly-excerpt' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+          {% else %}
+            <p>{% comment %}ly_code_replace_for_[ article.content | strip_html | truncatewords: 40 ]_begin{% endcomment %}{% include 'ly-content' with article %}{{ ly_translation | strip_html | truncatewords: 40 }}{% comment %}ly_code_replace_end{% endcomment %}</p>
+          {% endif %}
+        </div>
+  
+        {% comment %}
+          Show off meta information like number of comments and tags.
+        {% endcomment %}
+        <ul>
+          {% if blog.comments_enabled? %}
+          <li>
+            <a href="{{ article.url }}#comments">
+              {{ article.comments_count }}
+              {% comment %}ly_i18n_replace_for_[ 'blogs.comments.comments_with_count' | t: count: article.comments_count ]_begin{% endcomment %}{% if article.comments_count  == 0 %}{% capture ly_template %}{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}{% endcapture %}{% include 'ly-static-string' with '3885817' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = article.comments_count  %}{% assign ly_template = ly_template | replace: '[[count]]', replacement %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% elsif article.comments_count  == 1 %}{% capture ly_template %}{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}{% endcapture %}{% include 'ly-static-string' with '3885816' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = article.comments_count  %}{% assign ly_template = ly_template | replace: '[[count]]', replacement %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% elsif article.comments_count  == 2 %}{% capture ly_template %}{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}{% endcapture %}{% include 'ly-static-string' with '3885817' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = article.comments_count  %}{% assign ly_template = ly_template | replace: '[[count]]', replacement %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% else %}{% capture ly_template %}{{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}{% endcapture %}{% include 'ly-static-string' with '3885817' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = article.comments_count  %}{% assign ly_template = ly_template | replace: '[[count]]', replacement %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+  
+        <p class="read-more"><a href="{{ article.url }}" >{% comment %}ly_i18n_replace_for_[ 'blogs.article.read_more' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'blogs.article.read_more' | t }}{% endcapture %}{% include 'ly-static-string' with '3885820' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} </a></p>
+  
+      </div>
+  
+    {% endfor %}
+  </div>
+</div>
+
+</section>

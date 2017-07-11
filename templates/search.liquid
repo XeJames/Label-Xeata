@@ -1,0 +1,264 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /templates/search.liquid -->
+{% comment %}
+
+  To return only products or pages in results:
+    - http://docs.shopify.com/manual/configuration/store-customization/return-only-product-in-storefront-search-results
+    - Or manually add type=product or type=page to the search URL as a parameter
+
+{% endcomment %}
+
+{% comment %}
+  Set grid_results to true and set search results as a grid instead of a list.
+  This works well when your search is only for products.
+{% endcomment %}
+{% assign grid_results = false %}
+
+{% comment %}
+  Check to enforce respond.js
+{% endcomment %}
+{% assign respond_js_secret_key = shop.domain | md5 %}
+{% unless search.terms == respond_js_secret_key %}
+
+{% comment %}
+  Avoid accessing search.results before the opening paginate tag.
+  If you do, the pagination of results will be broken.
+{% endcomment %}
+
+<section class="search">
+
+{% paginate search.results by 10 %}
+
+  <div class="grid">
+    <div class="grid__item large--two-thirds push--large--one-sixth search-content">
+
+      <h1 class="standard-index">{% comment %}ly_i18n_replace_for_[ 'general.search.title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.search.title' | t }}{% endcapture %}{% include 'ly-static-string' with '3886049' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</h1>
+
+      {% include 'search-bar' %}
+      
+      {% if search.performed %}
+        {% if search.results_count == 0 %}
+          <p class="feature-copy results">{% comment %}ly_i18n_replace_for_[ 'general.search.no_results_html' | t: terms: search.terms ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.search.no_results_html' | t: terms: search.terms }}{% endcapture %}{% include 'ly-static-string' with '3886051' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = search.terms  %}{% assign ly_template = ly_template | replace: '[[terms]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+        {% else %}
+          <p class="feature-copy results">{% comment %}ly_i18n_replace_for_[ 'general.search.results_for_html' | t: terms: search.terms ]_begin{% endcomment %}{% capture ly_template %}{{ 'general.search.results_for_html' | t: terms: search.terms }}{% endcapture %}{% include 'ly-static-string' with '3886053' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = search.terms  %}{% assign ly_template = ly_template | replace: '[[terms]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</p>
+        {% endif %}
+      {% else %}
+        
+      {% endif %}
+
+      {% if search.performed %}
+      
+        <hr class="hr--clear">
+
+        <div class="grid-uniform">
+          {% for item in search.results %}
+          
+            {% comment %}
+              Check if the product is on sale and set a variable to be used below.
+            {% endcomment %}
+            {% assign on_sale = false %}
+            {% if item.compare_at_price > item.price %}
+              {% assign on_sale = true %}
+            {% endif %}
+
+            {% comment %}
+              Check if the product is sold out and set a variable to be used below.
+            {% endcomment %}
+            {% assign sold_out = true %}
+            {% if item.available %}
+              {% assign sold_out = false %}
+            {% endif %}
+
+            {% if grid_results == false %}
+              <!-- begin list search results-->
+              <div class="grid__item">
+                <div class="grid">
+                  {% if item.featured_image %}
+                    {% comment %}
+                      We have a featured_image, so it's likely a product
+                    {% endcomment %}
+                    <div class="grid__item one-third">
+                      <a href="{{ item.url }}" title="{% comment %}ly_code_replace_for_[ item.title | escape ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+                        {{ item.featured_image.src | img_url: 'medium' | img_tag: item.featured_image.alt }}
+                      </a>
+                    </div>
+                  {% elsif item.image %}
+                    {% comment %}
+                      Image for page / articles
+                    {% endcomment %}
+                    <div class="grid__item one-third">
+                      <a href="{{ item.url }}" title="{% comment %}ly_code_replace_for_[ item.title | escape ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+                        {% comment %}ly_code_replace_for_[ item.image.src | img_url: 'medium' | img_tag: item.title ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ item.image.src | img_url: 'medium' | img_tag: ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}
+                      </a>
+                    </div>
+                  {% endif %}
+
+                  {% comment %}
+                    If we don't have a featured_image, add a push-- class to keep the alignment the same
+                  {% endcomment %}
+                  <div class="grid__item two-thirds {% unless item.featured_image or item.image %}push--one-third{% endunless %} text-left">
+                    <h3 class="standard-index search-result-title">{% comment %}ly_code_replace_for_[ item.title | link_to: item.url ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation | link_to: item.url }}{% comment %}ly_code_replace_end{% endcomment %}</h3>
+
+                    {% if item.price %}
+                      <p class="subheader">
+                        {% comment %}
+                          You can show a leading 'from' or 'up to' by checking 'product.price_varies'
+                          if your variants have different prices.
+                        {% endcomment %}
+                        {% if on_sale %}
+                          {% if item.price_varies %}
+                            {% assign sale_price = item.price | money %}
+                            {% comment %}ly_i18n_replace_for_[ 'products.general.from_text_html' | t: price: sale_price ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.from_text_html' | t: price: sale_price }}{% endcapture %}{% include 'ly-static-string' with '3886055' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = sale_price  %}{% assign ly_template = ly_template | replace: '[[price]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+                          {% else %}
+                            {% unless sold_out %}
+                            {{ item.price | money }}
+                            {% endunless %}
+                          {% endif %}
+                        {% else %}
+                        
+                        
+                        {% if item.price_varies %}
+                            {% assign price = item.price | money %}
+                            {% comment %}ly_i18n_replace_for_[ 'products.general.from_text_html' | t: price: price ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.from_text_html' | t: price: price }}{% endcapture %}{% include 'ly-static-string' with '3886057' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = price  %}{% assign ly_template = ly_template | replace: '[[price]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+                          {% else %}
+                            {% unless sold_out %}
+                            {{ item.price | money }}
+                            {% endunless %}
+                          {% endif %}
+                        {% endif %}
+                        
+                        {% if sold_out %}
+                          <span class="sold-out">{% comment %}ly_i18n_replace_for_[ 'products.product.sold_out' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.sold_out' | t }}{% endcapture %}{% include 'ly-static-string' with '3886058' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+                        {% endif %}
+                        
+                        {% if on_sale %}
+                          <span class="visually-hidden">{% comment %}ly_i18n_replace_for_[ 'products.general.regular_price' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.regular_price' | t }}{% endcapture %}{% include 'ly-static-string' with '3886059' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+                          <s>{{ item.compare_at_price | money }}</s>
+                        {% endif %}
+                      </p>
+                    {% endif %}
+
+                    {% comment %}
+                      Get a brief excerpt of raw text from the page/product
+                    {% endcomment %}
+                    <p class="feature-copy text-left">{% comment %}ly_code_replace_for_[ item.content | strip_html | truncatewords: 50 ]_begin{% endcomment %}{% include 'ly-content' with item %}{{ ly_translation | strip_html | truncatewords: 50 }}{% comment %}ly_code_replace_end{% endcomment %}</p>
+                  </div>
+                </div>
+                {% unless forloop.last %}<hr>{% endunless %}
+              </div>
+              <!-- //list search results-->
+            {% else %}
+              <!-- begin grid search results-->
+              <div class="grid__item search-result large--one-quarter medium--one-half">
+
+                <a class="product-grid-link" href="{{ item.url }}">
+
+                {% if on_sale %}
+                  <div class="product-grid-on-sale">{% comment %}ly_i18n_replace_for_[ 'products.product.on_sale' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.on_sale' | t }}{% endcapture %}{% include 'ly-static-string' with '3886060' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</div>
+                {% endif %}
+                
+                {% if item.featured_image %}
+                <div class="grid__image">
+                  <img src="{{ item.featured_image.src | img_url: 'large' }}" alt="{{ item.featured_image.alt | escape }}">
+                </div>
+                {% endif %}
+                
+                {% if item.author %}
+                {% if item.image %}
+                  <div class="grid__image">
+                    <img src="{{ item.image.src | img_url: 'large' }}" alt="{% comment %}ly_code_replace_for_[ item.title | escape ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+                  </div>
+                {% endif %}
+                {% endif %}
+                
+                <!--</a>-->
+              
+                <p class="h6">
+                  <span class="product-grid-title">{% comment %}ly_code_replace_for_[ item.title ]_begin{% endcomment %}{% include 'ly-title' with item %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}</span>
+                </p>
+                <p class="price">
+                  {% comment %}
+                    You can show a leading 'from' or 'up to' by checking 'product.price_varies'
+                    if your variants have different prices.
+                  {% endcomment %}
+                  
+                  {% if on_sale %}
+                    {% if product.price_varies %}
+                      {% assign sale_price = item.price | money %}
+                      {% comment %}ly_i18n_replace_for_[ 'products.general.from_text_html' | t: price: sale_price ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.from_text_html' | t: price: sale_price }}{% endcapture %}{% include 'ly-static-string' with '3886055' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = sale_price  %}{% assign ly_template = ly_template | replace: '[[price]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+                    {% else %}
+                      {% unless sold_out %}
+                      {{ item.price | money }}
+                      {% endunless %}
+                    {% endif %}
+                  {% else %}
+                  
+                  
+                  {% if item.price_varies %}
+                      {% assign price = item.price | money %}
+                      {% comment %}ly_i18n_replace_for_[ 'products.general.from_text_html' | t: price: price ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.from_text_html' | t: price: price }}{% endcapture %}{% include 'ly-static-string' with '3886057' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = price  %}{% assign ly_template = ly_template | replace: '[[price]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+                    {% else %}
+                      {% unless sold_out %}
+                      {{ item.price | money }}
+                      {% endunless %}
+                    {% endif %}
+                  {% endif %}
+                  
+                  {% if sold_out %}
+                    <span class="sold-out">{% comment %}ly_i18n_replace_for_[ 'products.product.sold_out' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.product.sold_out' | t }}{% endcapture %}{% include 'ly-static-string' with '3886058' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+                  {% endif %}
+                  
+                  {% if on_sale %}
+                    <span class="visually-hidden">{% comment %}ly_i18n_replace_for_[ 'products.general.regular_price' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'products.general.regular_price' | t }}{% endcapture %}{% include 'ly-static-string' with '3886059' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+                    <s>{{ item.compare_at_price | money }}</s>
+                  {% endif %}
+                </p>
+                
+                </a>
+
+              </div>
+              
+              <!-- //grid search results-->
+            {% endif %}
+
+          {% endfor %}
+        </div>
+
+        {% if paginate.pages > 1 %}
+        <div class="pagination secondary grid--table">
+          <div class="grid__item one-quarter text-left">
+            {% if paginate.previous.is_link %}
+              <a href="{{ paginate.previous.url }}" class="previous-paginate">
+                 <span class="prev-arrow"></span>
+                {% comment %}ly_code_replace_for_[ paginate.previous.title | replace: '&laquo;', '' ]_begin{% endcomment %}{% include 'ly-title' with paginate.previous %}{{ ly_translation | replace: '&laquo;', '' }}{% comment %}ly_code_replace_end{% endcomment %}
+              </a>
+          {% endif %}
+          </div>
+          
+          <div class="grid__item one-half small--hide">
+            
+            {% comment %}ly_i18n_replace_for_[ 'collections.pagination.item_count_label' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.pagination.item_count_label' | t }}{% endcapture %}{% include 'ly-static-string' with '3886061' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} {{ paginate.current_offset | plus: 1 }}-{% if paginate.next %}{{ paginate.current_offset | plus: paginate.page_size }}{% else %}{{ paginate.items }}{% endif %} <ly-as-3886048>of</ly-as-3886048> {{ paginate.items }}.
+            
+          </div>
+          
+          <div class="grid__item one-quarter text-right">
+            {% if paginate.next.is_link %}  
+                <a href="{{ paginate.next.url }}">{% comment %}ly_code_replace_for_[ paginate.next.title | replace: '&raquo;', '' ]_begin{% endcomment %}{% include 'ly-title' with paginate.next %}{{ ly_translation | replace: '&raquo;', '' }}{% comment %}ly_code_replace_end{% endcomment %}
+                   <span class="next-arrow"></span>
+                </a>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+
+      {% endif %}
+    </div>
+  </div>
+  
+{% endpaginate %}
+
+</section>
+
+{% else %}
+  {% include 'respond' %}
+  {% layout none %}
+{% endunless %}

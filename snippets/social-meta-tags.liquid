@@ -1,0 +1,83 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/social-meta-tags.liquid -->
+<!-- /snippets/social-meta-tags.liquid -->
+{% comment %}
+  Add Facebook and Pinterest Open Graph meta tags to product pages
+  for friendly Facebook sharing and Pinterest pinning.
+
+  More info Open Graph meta tags
+    - https://developers.facebook.com/docs/opengraph/using-objects/
+    - https://developers.pinterest.com/rich_pins/
+
+  Use the Facebook Open Graph Debugger for validation (and cache clearing)
+    - http://developers.facebook.com/tools/debug
+
+  Validate your Pinterest rich pins
+    - https://developers.pinterest.com/rich_pins/validator/
+{% endcomment %}
+{% if template contains 'product' %}
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{% comment %}ly_code_replace_for_[ product.title | strip_html | escape ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation | strip_html | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+  {% for image in product.images limit:3 %}
+  <meta property="og:image" content="http:{{ image.src | img_url: 'grande' }}">
+  <meta property="og:image:secure_url" content="https:{{ image.src | img_url: 'grande' }}">
+  {% endfor %}
+  <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html | escape }}">
+  <meta property="og:price:currency" content="{{ shop.currency }}">
+{% elsif template contains 'article' %}
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{% comment %}ly_code_replace_for_[ article.title | strip_html | escape ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation | strip_html | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+  
+  {% if article.image %}
+  <meta property="og:image" content="http:{{ article | img_url: 'medium' }}">
+  <meta property="og:image:secure_url" content="https:{{ article | img_url: 'medium' }}">
+  {% endif %}
+  
+{% else %}
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ langify_title | escape }}">
+  {% if settings.logo_use_image %}  
+  <meta property="og:image" content="http:{% comment %}ly_asset_replace_for_[ 'logo.png' | asset_url ]_begin{% endcomment %}{% assign ly_asset = 'logo.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}">
+  <meta property="og:image:secure_url" content="https:{% comment %}ly_asset_replace_for_[ 'logo.png' | asset_url ]_begin{% endcomment %}{% assign ly_asset = 'logo.png' %}{% include 'ly-asset' with ly_asset %}{{ ly_translation  }}{% comment %}ly_asset_replace_end{% endcomment %}">
+  {% endif %}
+{% endif %}
+{% if langify_description %}
+  <meta property="og:description" content="{{ langify_description | escape }}">
+{% endif %}
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:site_name" content="{{ langify_shop_name }}">
+
+{% comment %}
+  This snippet renders meta data needed to create a Twitter card
+  for products and articles.
+
+  Your cards must be approved by Twitter to be activated
+    - https://dev.twitter.com/docs/cards/validation/validator
+
+  More information:
+   - https://dev.twitter.com/cards/types/summary
+{% endcomment %}
+
+{% comment %}
+  Twitter user name of the site, based on theme settings
+{% endcomment %}
+{% if settings.twittercard_handle != blank %}
+  <meta name="twitter:site" content="{{ settings.twittercard_handle }}">
+{% endif %}
+<meta name="twitter:card" content="summary">
+{% if template contains 'product' %}
+  <meta name="twitter:title" content="{% comment %}ly_code_replace_for_[ product.title ]_begin{% endcomment %}{% include 'ly-title' with product %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">
+  <meta name="twitter:description" content="{% comment %}ly_code_replace_for_[ product.description | strip_html | truncatewords: 140, '' | escape ]_begin{% endcomment %}{% include 'ly-description' with product %}{{ ly_translation | strip_html | truncatewords: 140, '' | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+  <meta name="twitter:image" content="https:{{ product.featured_image.src | img_url: 'medium' }}">
+  <meta name="twitter:image:width" content="240">
+  <meta name="twitter:image:height" content="240">
+{% elsif template contains 'article' %}
+  <meta name="twitter:title" content="{% comment %}ly_code_replace_for_[ article.title ]_begin{% endcomment %}{% include 'ly-title' with article %}{{ ly_translation }}{% comment %}ly_code_replace_end{% endcomment %}">
+  <meta name="twitter:description" content="{% comment %}ly_code_replace_for_[ article.excerpt_or_content | strip_html | truncatewords: 140, '' | escape ]_begin{% endcomment %}{% include 'ly-excerpt_or_content' with article %}{{ ly_translation | strip_html | truncatewords: 140, '' | escape }}{% comment %}ly_code_replace_end{% endcomment %}">
+  {% comment %}
+    Check if content contains an image to add to the card
+      - Source: http://blog.viralica.com/2013/09/twitter-product-cards-on-shopify/
+  {% endcomment %}
+  {% if article.image %}
+  <meta name="twitter:image" content="https:{{ article | img_url: 'medium' }}">
+  {% endif %}
+{% endif %}

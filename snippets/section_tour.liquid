@@ -1,0 +1,53 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/section_tour.liquid -->
+<section class="homepage-tour" data-source='{{ settings.tour_source }}'>
+ 
+<div class="wrapper">
+  <h2 class="section_title">
+    {% comment %}ly_new_settings_replace_for_[ settings.tour_section_title ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id3885838"] %}{% assign ly_translation = shop.metafields[namespace]["id3885838"] %}{% else %}{% assign ly_translation = settings.tour_section_title %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}
+    <div class="border"></div>
+  </h2>
+</div>
+
+{% if settings.tour_source != '' %}
+
+<div class="wrapper tour-item-wrapper">
+  
+  <div class="section-content">
+     <div class="grid--full grid--table tour-item-blank">
+       <div class="grid__item one-tenth small--two-tenths text-left">
+         <div class="tour-date">
+           <div class="date-day section-title"></div>
+           <div class="date-month section-title"></div>
+         </div>
+       </div>
+        <div class="grid__item seven-tenths small--eight-tenths">
+         <a class="ticket-link" href="" target="_blank">
+           <div class="event-location feature-copy"></div>
+           <div class="event-venue subheader"></div>
+         </a>
+       </div>
+        <div class="grid__item two-tenths text-right small--hide">
+         <a href="" target="_blank" class="subheader ticket-link">{% comment %}ly_i18n_replace_for_[ 'homepage.tour.tour_ticket_link' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.tour.tour_ticket_link' | t }}{% endcapture %}{% include 'ly-static-string' with '3885839' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</a>
+       </div>
+     </div>
+     
+     <div class="grid--full grid--table tour-item-no-events">
+      <div class="grid__item">
+        <span class="feature-copy">{% comment %}ly_i18n_replace_for_[ 'homepage.tour.tour_no_events' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.tour.tour_no_events' | t }}{% endcapture %}{% include 'ly-static-string' with '3885840' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</span>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<div class="wrapper button-wrapper"> 
+  <a href="" target="_blank" class="btn">{% comment %}ly_i18n_replace_for_[ 'homepage.tour.tour_more_link' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.tour.tour_more_link' | t }}{% endcapture %}{% include 'ly-static-string' with '3885841' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}  <span class="next-arrow"></span></a>
+</div>
+
+{% else %}
+<div class="wrapper text-center">
+  {% comment %}ly_i18n_replace_for_[ 'homepage.onboarding.complete_setup_html' | t: theme_id: theme.id ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.onboarding.complete_setup_html' | t: theme_id: theme.id }}{% endcapture %}{% include 'ly-static-string' with '3885843' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = theme.id  %}{% assign ly_template = ly_template | replace: '[[theme_id]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %} 
+</div>
+{% endif %}
+
+</section>

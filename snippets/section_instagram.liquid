@@ -1,0 +1,37 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/section_instagram.liquid -->
+<section class="homepage-instagram">
+  <div class="wrapper">
+    {% if settings.instagram_section_title != '' %}
+      <h2 class="section_title">
+        {% comment %}ly_new_settings_replace_for_[ settings.instagram_section_title ]_begin{% endcomment %}{% assign language = cart.attributes["language"] %}{% if language == nil %}{% assign language = shop.metafields["languages"]["default"] %}{% endif %}{% assign namespace = language | append: "as" %}{% if shop.metafields[namespace]["id3885823"] %}{% assign ly_translation = shop.metafields[namespace]["id3885823"] %}{% else %}{% assign ly_translation = settings.instagram_section_title %}{% endif %}{{ ly_translation }}{% comment %}ly_new_settings_replace_end{% endcomment %}
+        <div class="border"></div>
+      </h2>
+    {% endif %}
+  </div>
+  
+  {% comment %}
+  {% if settings.instagram_access_token != '' %}
+  <div class="wrapper grams">
+    <div class="grid--full">
+      <div class="grid__item xlarge--one-sixth large--one-quarter medium--one-half small--one-half gram-item-blank">
+        <a href="" target="_blank">
+        </a>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="wrapper text-center">
+    {% comment %}ly_i18n_replace_for_[ 'homepage.onboarding.complete_setup_html' | t: theme_id: theme.id ]_begin{% endcomment %}{% capture ly_template %}{{ 'homepage.onboarding.complete_setup_html' | t: theme_id: theme.id }}{% endcapture %}{% include 'ly-static-string' with '3885825' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% assign replacement = theme.id  %}{% assign ly_template = ly_template | replace: '[[theme_id]]', replacement %}{% if escape_content %}{{ ly_template}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}
+  </div>
+  {% endif %}
+  {% endcomment %}
+  
+  <div class="wrapper grams ds_linkedin_link">
+    <div class="grid--full">
+      <a href="https://www.linkedin.com/in/james-white-b895783" target="_blank">
+      	<img src="https://cdn.shopify.com/s/files/1/1156/5806/files/LinkedIn_Logo.png?14757933719852702642" />
+      </a>
+    </div>
+  </div>
+  
+</section>

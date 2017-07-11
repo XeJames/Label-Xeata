@@ -1,0 +1,84 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/collection-sorting.liquid -->
+
+{% if settings.enable_sort_filter %}
+<div class="form-horizontal">
+  <label for="SortBy">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.title' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.title' | t }}{% endcapture %}{% include 'ly-static-string' with '3885737' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</label>
+    <select name="SortBy" id="SortBy">
+      <option value="manual">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.featured' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.featured' | t }}{% endcapture %}{% include 'ly-static-string' with '3885738' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</option>
+      <option value="best-selling">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.best_selling' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.best_selling' | t }}{% endcapture %}{% include 'ly-static-string' with '3885739' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</option>
+      <option value="title-ascending">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.az' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.az' | t }}{% endcapture %}{% include 'ly-static-string' with '3885740' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</option>
+      <option value="title-descending">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.za' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.za' | t }}{% endcapture %}{% include 'ly-static-string' with '3885741' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</option>
+      <option value="price-ascending">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.price_ascending' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.price_ascending' | t }}{% endcapture %}{% include 'ly-static-string' with '3885742' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</option>
+      <option value="price-descending">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.price_descending' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.price_descending' | t }}{% endcapture %}{% include 'ly-static-string' with '3885743' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</option>
+      <option value="created-descending">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.date_descending' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.date_descending' | t }}{% endcapture %}{% include 'ly-static-string' with '3885744' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</option>
+      <option value="created-ascending">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.date_ascending' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.date_ascending' | t }}{% endcapture %}{% include 'ly-static-string' with '3885745' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</option>
+    </select>
+</div>
+{% endif %}
+
+
+{% if settings.enable_tag_filter %}
+<div class="form-horizontal">
+  <label for="SortBy">{% comment %}ly_i18n_replace_for_[ 'collections.sorting.filter' | t ]_begin{% endcomment %}{% capture ly_template %}{{ 'collections.sorting.filter' | t }}{% endcapture %}{% include 'ly-static-string' with '3885746' %}{% if ly_translation %}{% assign escape_content = true %}{% assign ly_template = ly_translation %}{% else %}{% assign escape_content = false %}{% endif %}{% if escape_content %}{{ ly_template | escape}}{% else %}{{ ly_template }}{% endif %}{% comment %}ly_i18n_replace_end{% endcomment %}</label>
+    <select class="coll-filter">
+      <option value=""><ly-as-3885736>All</ly-as-3885736></option>
+      {% for tag in collection.all_tags %}
+      {% if current_tags contains tag %}
+      <option value="{{ tag | handle }}" selected>{{ tag }}</option>
+      {% else %}
+      <option value="{{ tag | handle }}">{{ tag }}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+</div>
+{% endif %}
+
+<script>
+  /*============================================================================
+    Inline JS because collection liquid object is only available
+    on collection pages and not external JS files
+  ==============================================================================*/
+  Shopify.queryParams = {};
+  if (location.search.length) {
+    for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+      aKeyValue = aCouples[i].split('=');
+      if (aKeyValue.length > 1) {
+        Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+      }
+    }
+  }
+
+  $(function() {
+    $('#SortBy')
+      .val('{{ collection.sort_by | default: collection.default_sort_by }}')
+      .bind('change', function() {
+        Shopify.queryParams.sort_by = jQuery(this).val();
+        location.search = jQuery.param(Shopify.queryParams);
+      }
+    );
+    
+    var collFilters = jQuery('.coll-filter');
+    collFilters.change(function() {
+      var newTags = [];
+      collFilters.each(function() { 
+        if (jQuery(this).val()) {
+          newTags.push(jQuery(this).val());
+        }
+      });
+      if (newTags.length) {
+        var query = newTags.join('+');
+        window.location.href = jQuery('{{ 'tag' | link_to_tag: 'tag' }}').attr('href').replace('tag', query);
+      } 
+      else {
+        {% if collection.handle %}
+        window.location.href = '/collections/{{ collection.handle }}';
+        {% elsif collection.products.first.type == collection.title %}
+        window.location.href = '{% comment %}ly_code_replace_for_[ collection.title | url_for_type ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation | url_for_type }}{% comment %}ly_code_replace_end{% endcomment %}';
+        {% elsif collection.products.first.vendor == collection.title %}
+        window.location.href = '{% comment %}ly_code_replace_for_[ collection.title | url_for_vendor ]_begin{% endcomment %}{% include 'ly-title' with collection %}{{ ly_translation | url_for_vendor }}{% comment %}ly_code_replace_end{% endcomment %}';
+        {% endif %}
+      }
+    });
+    
+  });
+</script>

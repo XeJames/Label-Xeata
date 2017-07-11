@@ -1,0 +1,138 @@
+{% comment %}ly_global_begin{% endcomment %}{% include 'ly-global' %}{% comment %}ly_global_end{% endcomment %}<!-- /snippets/social.liquid -->
+{% assign extraClasses = '' %}
+
+{% if social_location == 'header' %}
+{% assign extraClasses =  'medium-down--hide' %}
+{% endif %}
+
+{% if heroImage %}
+{% assign extraClasses =  ' medium-down--show' %}
+{% endif %}
+
+{% if social_location == 'footer' %}
+{% assign extraClasses =  extraClasses | append: ' social-footer'  %}
+{% endif %}
+
+<ul class="social-list {{ extraClasses }}">
+
+  {% if settings.social_facebook_url != blank %}
+    <li>
+      <a href="{{ settings.social_facebook_url }}" title="{{ langify_shop_name }} <ly-as-3885844>on Facebook</ly-as-3885844>" target="_blank">
+        <span class="socicon socicon-facebook"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_instagram_url != blank %}
+    <li>
+      <a href="{{ settings.social_instagram_url }}" title="{{ langify_shop_name }} <ly-as-3885845>on Instagram</ly-as-3885845>" target="_blank">
+        <span class="socicon socicon-instagram"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_twitter_url != blank %}
+    <li>
+      <a href="{{ settings.social_twitter_url }}" title="{{ langify_shop_name }} <ly-as-3885846>on Twitter</ly-as-3885846>" target="_blank">
+        <span class="socicon socicon-twitter"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_pinterest_url != blank %}
+    <li>
+      <a href="{{ settings.social_pinterest_url }}" title="{{ langify_shop_name }} <ly-as-3885847>on Pinterest</ly-as-3885847>" target="_blank">
+        <span class="socicon socicon-pinterest"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_soundcloud_url != blank %}
+    <li>
+      <a href="{{ settings.social_soundcloud_url }}" title="{{ langify_shop_name }} <ly-as-3885848>on Soundcloud</ly-as-3885848>" target="_blank">
+        <span class="socicon socicon-soundcloud"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_spotify_url != blank %}
+    <li>
+      <a href="{{ settings.social_spotify_url }}" title="{{ langify_shop_name }} <ly-as-3885849>on Spotify</ly-as-3885849>" target="_blank">
+        <span class="socicon socicon-spotify"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_flickr_url != blank %}
+    <li>
+      <a href="{{ settings.social_flickr_url }}" title="{{ langify_shop_name }} <ly-as-3885850>on Flickr</ly-as-3885850>" target="_blank">
+        <span class="socicon socicon-flickr"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_vimeo_url != blank %}
+    <li>
+      <a href="{{ settings.social_vimeo_url }}" title="{{ langify_shop_name }} <ly-as-3885851>on Vimeo</ly-as-3885851>" target="_blank">
+        <span class="socicon socicon-vimeo"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_apple_url != blank %}
+    <li>
+      <a href="{{ settings.social_apple_url }}" title="{{ langify_shop_name }} <ly-as-3885852>on Apple</ly-as-3885852>" target="_blank">
+        <span class="socicon socicon-apple"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_lastfm_url != blank %}
+    <li>
+      <a href="{{ settings.social_lastfm_url }}" title="{{ langify_shop_name }} <ly-as-3885853>on Last FM</ly-as-3885853>" target="_blank">
+        <span class="socicon socicon-lastfm"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_youtube_url != blank %}
+    <li>
+      <a href="{{ settings.social_youtube_url }}" title="{{ langify_shop_name }} <ly-as-3885854>on YouTube</ly-as-3885854>" target="_blank">
+        <span class="socicon socicon-youtube"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_google_url != blank %}
+    <li>
+      <a href="{{ settings.social_google_url }}" title="{{ langify_shop_name }} <ly-as-3885855>on Google</ly-as-3885855>" target="_blank">
+        <span class="socicon socicon-google"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_tumblr_url != blank %}
+    <li>
+      <a href="{{ settings.social_tumblr_url }}" title="{{ langify_shop_name }} <ly-as-3885856>on Tumblr</ly-as-3885856>" target="_blank">
+        <span class="socicon socicon-tumblr"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_triplej_url != blank %}
+    <li>
+      <a href="{{ settings.social_triplej_url }}" title="{{ langify_shop_name }} <ly-as-3885857>on Triple J</ly-as-3885857>" target="_blank">
+        <span class="socicon socicon-triplej"></span>
+      </a>
+    </li>
+  {% endif %}
+  
+  {% if settings.social_mixcloud_url != blank %}
+    <li>
+      <a href="{{ settings.social_mixcloud_url }}" title="{{ langify_shop_name }} <ly-as-3885858>on Mixcloud</ly-as-3885858>" target="_blank">
+        <span class="socicon socicon-mixcloud"></span>
+      </a>
+    </li>
+  {% endif %}
+
+</ul>
